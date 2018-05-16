@@ -1,17 +1,11 @@
 <?php
 
 namespace ArtinCMS\LBDM;
-
 use Illuminate\Support\ServiceProvider;
+use Validator;
 
 class LBDMServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
-
     public function boot()
     {
     	// the main router
@@ -38,6 +32,17 @@ class LBDMServiceProvider extends ServiceProvider
 	    $this->publishes([
 		    __DIR__ . '/Config/LBDM.php' => config_path('laravel_basicdata_manager.php'),
 	    ]);
+
+        Validator::extend('exists_or_zero', function ($attribute, $value, $parameters) {
+           /* dd($attribute, $value, $parameters);*/
+            if($value==0) return true;
+            else
+            {
+             $basic_data=\ArtinCMS\LBDM\Models\BasicData::find($value);
+             if($basic_data) return true;
+             else return false;
+            }
+        });
     }
 
     /**

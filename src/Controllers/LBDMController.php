@@ -95,11 +95,11 @@ class LBDMController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'parent_id'=>'required',
+                'parent_id'=>'required|exists_or_zero:BasicData',
                 'title' => 'required|string',
                 'dev_title' => 'required|string',
                 'is_active' => 'required|integer:0,1',
-                'comment' => 'string',
+                'comment' => 'nullable|string',
             ]
         );
         if ($validator->fails()) {
