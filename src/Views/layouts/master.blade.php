@@ -12,17 +12,21 @@
     <!-- Optional CSS -->
     @yield('plugin_css')
     @yield('inline_css')
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    @include('LBDM::layouts.helpers.js.core_js')
+
+    <!-- Optional JavaScript -->
+    @yield('plugin_js')
+    @yield('inline_js')
 </head>
 <body>
+
 @yield('content')
 
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-@include('LBDM::layouts.helpers.js.core_js')
-
 <!-- Optional JavaScript -->
-@yield('plugin_js')
-
-@yield('inline_js')
+@yield('footer_plugin_js')
+@yield('footer_inline_js')
 
 </body>
 </html>
