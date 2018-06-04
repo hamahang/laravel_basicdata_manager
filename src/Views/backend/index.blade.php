@@ -103,7 +103,7 @@
                                                     <span class="red-star"></span>
                                                     <span>داده های بیشتر:</span></lable>
                                                 <div class="col-sm-5">
-                                                    <input  type="text" class="form-control" name="extra_field" id="extra_field"/>
+                                                    <input type="text" class="form-control" name="extra_field" id="extra_field"/>
                                                 </div>
                                                 <div class="col-sm-4" id="#error_title"></div>
                                             </div>
