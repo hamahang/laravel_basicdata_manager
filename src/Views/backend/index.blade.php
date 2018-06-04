@@ -1,22 +1,13 @@
 @extends('LBDM::layouts.master')
 
-@section('plugin_css')
-    <link rel="stylesheet" href="{{asset('vendor/LBDM/packages/datatabels/datatables.min.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/LBDM/packages/jstree/themes/default/style.min.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/LBDM/css/select2.css')}}">
-@stop
-
 @section('content')
     <section>
         <div class="container-fluid">
             <div class="row">
                 <div class=" col-lg-3">
-                    <div id="jstree_basic">
-
-                    </div>
+                    <div id="jstree_basic"></div>
                 </div>
                 <div class="col-lg-9">
-
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="container">
@@ -139,18 +130,7 @@
         </div>
     </section>
 @stop
-@section('plugin_js')
-    <script src="{{asset('vendor/LBDM/packages/datatabels/datatables.min.js')}}"></script>
-    <script src="{{asset('vendor/LBDM/js/jquery-confirm/jquery-confirm.js')}}"></script>
-    <script src="{{asset('vendor/LBDM/packages/jspanel/jquery.jspanel.min.js')}}"></script>
-    <script src="{{asset('vendor/LBDM/packages/jspanel/CustomJsPanel.js')}}"></script>
-    <script src="{{asset('vendor/LBDM/packages/jstree/jstree.js')}}"></script>
-    <script src="{{asset('vendor/LBDM/js/init_functions/init_select2.js')}}"></script>
-    <script src="{{asset('vendor/LBDM/js/select2.min.js')}}"></script>
-@stop
 
 @section('inline_js')
-
     @include('LBDM::backend.helper.basicdata_inline_js')
-
 @stop

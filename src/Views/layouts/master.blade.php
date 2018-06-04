@@ -6,15 +6,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('page_title','KaraSun - backend')</title>
 
-    <!-- Bootstrap CSS -->
-    @include('LBDM::layouts.helpers.css.core_css')
+    <!-- All CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('vendor/laravel_basicdata_manager/build/css/init_core_LBDM.min.css')}}">
+
 
     <!-- Optional CSS -->
     @yield('plugin_css')
     @yield('inline_css')
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    @include('LBDM::layouts.helpers.js.core_js')
+    <!-- All JS -->
+    <script type="text/javascript" src="{{asset('vendor/laravel_basicdata_manager/build/js/init_core_LBDM.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('vendor/laravel_basicdata_manager/build/js/init_core_LBDM.min.js')}}"></script>
 
     <!-- Optional JavaScript -->
     @yield('plugin_js')
