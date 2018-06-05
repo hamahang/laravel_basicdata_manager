@@ -288,7 +288,7 @@ class LBDMController extends Controller
         $basicdata=BasicData::orderBy('id','ASC');
         $basic_middel=$basicdata->get();
         $basicdata_selected=$basic_middel->where('id',$request->basicdata_id)->first();
-            $result['header'] = '<span class="pull-left">'.$basicdata_selected->title.'</span>';
+            $result['header'] = '<span class="pull-right">'.$basicdata_selected->title.'</span>';
             $result['content'] = View::make('LBDM::backend.JsPanelBasicDataValue.content')
                 ->with('basic_id',$request->basicdata_id)
                 ->with('basicdata',$basicdata->get())
