@@ -9,7 +9,9 @@
 @stop
 
 @section('content')
+    <table id="basicdata_table" class="table table-striped table-bordered"></table>
     <section>
+
         <div class="container-fluid">
             <div class="row">
                 <div class=" col-lg-3">
@@ -48,7 +50,7 @@
                                             </form>
                                         </div>
                                         <div class="container">
-                                            <table id="basicdata_table" class="table table-striped table-bordered text-right"></table>
+                                            <table id="basicdata_table2" class="table table-striped table-bordered text-right"></table>
                                         </div>
                                     </div>
                                     <div id="new" class="tab-pane">
