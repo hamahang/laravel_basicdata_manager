@@ -15,7 +15,7 @@
 
     <!-- All JS -->
     <script type="text/javascript" src="{{asset('vendor/laravel_basicdata_manager/build/js/init_core_LBDM.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('vendor/laravel_basicdata_manager/build/js/init_core_LBDM.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('vendor/laravel_basicdata_manager/build/js/init_data_LBDM.min.js')}}"></script>
 
     <!-- Optional JavaScript -->
     @yield('plugin_js')
