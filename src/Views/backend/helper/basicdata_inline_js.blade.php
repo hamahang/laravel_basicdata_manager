@@ -302,8 +302,8 @@
         }
     });
 
-    init_select2('#select_parent', '{{route('LBDM.AutoCompleteBasicdat')}}', 'جستجو کنید ...');
-    init_select2('#parent_id', '{{route('LBDM.AutoCompleteBasicdat')}}', false, false, true, 'جستجو کنید ...');
+    init_select2_ajax('#select_parent', '{{route('LBDM.AutoCompleteBasicdat')}}', 'جستجو کنید ...');
+    init_select2_ajax('#parent_id', '{{route('LBDM.AutoCompleteBasicdat')}}', false, false, true, 'جستجو کنید ...');
     var data_parent = {id: 0, text: 'ریشه'};
     var newOption = new Option(data_parent.text, data_parent.id, true, true);
     $('#parent_id').append(newOption).trigger('change');
