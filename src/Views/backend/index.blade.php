@@ -32,7 +32,7 @@
                                         <div class="text-left">
                                             <span class="fas fa-filter" id="basic_data_filter_icon" style="font-size: 25px;color: #525252;margin-top: 20px;cursor: pointer;"></span>
                                         </div>
-                                        <div id="div_base_filter_basicdata" class="col-12">
+                                        <div id="div_base_filter_basicdata" class="container">
                                             <form id="FormFilter">
                                                 <div class="form-group  col-12">
                                                     <lable class="col-sm-1 text-center">
@@ -47,8 +47,8 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="col-12">
-                                            <table id="basicdata_table" class="table table-striped  table-bordered text-right"></table>
+                                        <div class="container">
+                                            <table id="basicdata_table" class="table table-striped table-bordered text-right"></table>
                                         </div>
                                     </div>
                                     <div id="new" class="tab-pane">
