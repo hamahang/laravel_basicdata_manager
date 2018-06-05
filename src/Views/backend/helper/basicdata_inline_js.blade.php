@@ -13,59 +13,59 @@
         var columns;
         var columnDefs;
         if (filter_var_id) {
-            columns = [
-
-                {data: 'title', name: 'title', title: 'عنوان'},
-                {data: 'dev_title', name: 'dev_title', title: 'عنوان مورد استفاده'},
-                {data: 'comment', name: 'comment', title: 'توضیحات'},
-                {data: 'count_basic', name: 'count_basic', "orderable": false, searchable: false, title: 'زیر مجموعه'},
-                {
-                    title: "ترتیب",
-                    data: 'order',
-                    name: 'order',
-                    mRender: function (data, type, full) {
-                        var order = datatable_user.order();
-                        if (order[0][1] == 'desc') {
-                            return '<button type="button" class="btn btn-xs bg-info-400 fas fa-level-up-alt reorder_basicdata" ' +
-                                '      data-order_type="increase" ' +
-                                '      data-id="' + full.id + '" ' +
-                                '      data-parent_id="' + full.parent_id + '" >' +
-                                '   </button>' +
-                                '<span class="order_number">' + full.order + '</span>' +
-                                ' <button type="button" class="btn btn-xs bg-info-800 fas fa-level-down-alt reorder_basicdata" ' +
-                                '      data-order_type="decrease"' +
-                                '      data-id="' + full.id + '" ' +
-                                '      data-parent_id="' + full.parent_id + '" >' +
-                                '   </button>';
+            columns =
+                [
+                    {data: 'title', name: 'title', title: 'عنوان'},
+                    {data: 'dev_title', name: 'dev_title', title: 'عنوان مورد استفاده'},
+                    {data: 'comment', name: 'comment', title: 'توضیحات'},
+                    {data: 'count_basic', name: 'count_basic', "orderable": false, searchable: false, title: 'زیر مجموعه'},
+                    {
+                        title: "ترتیب",
+                        data: 'order',
+                        name: 'order',
+                        mRender: function (data, type, full) {
+                            var order = datatable_user.order();
+                            if (order[0][1] == 'desc') {
+                                return '<button type="button" class="btn btn-xs bg-info-400 fas fa-level-up-alt reorder_basicdata" ' +
+                                    '      data-order_type="increase" ' +
+                                    '      data-id="' + full.id + '" ' +
+                                    '      data-parent_id="' + full.parent_id + '" >' +
+                                    '   </button>' +
+                                    '<span class="order_number">' + full.order + '</span>' +
+                                    ' <button type="button" class="btn btn-xs bg-info-800 fas fa-level-down-alt reorder_basicdata" ' +
+                                    '      data-order_type="decrease"' +
+                                    '      data-id="' + full.id + '" ' +
+                                    '      data-parent_id="' + full.parent_id + '" >' +
+                                    '   </button>';
+                            }
+                            else {
+                                return '<button type="button" class="btn btn-xs bg-info-400 fas fa-level-up-alt reorder_basicdata" ' +
+                                    '      data-order_type="decrease" ' +
+                                    '      data-id="' + full.id + '" ' +
+                                    '      data-parent_id="' + full.parent_id + '" >' +
+                                    '   </button>' +
+                                    '<span class="order_number">' + full.order + '</span>' +
+                                    ' <button type="button" class="btn btn-xs bg-info-800 fas fa-level-down-alt reorder_basicdata" ' +
+                                    '      data-order_type="increase"' +
+                                    '      data-id="' + full.id + '" ' +
+                                    '      data-parent_id="' + full.parent_id + '" >' +
+                                    '   </button>';
+                            }
                         }
-                        else {
-                            return '<button type="button" class="btn btn-xs bg-info-400 fas fa-level-up-alt reorder_basicdata" ' +
-                                '      data-order_type="decrease" ' +
-                                '      data-id="' + full.id + '" ' +
-                                '      data-parent_id="' + full.parent_id + '" >' +
-                                '   </button>' +
-                                '<span class="order_number">' + full.order + '</span>' +
-                                ' <button type="button" class="btn btn-xs bg-info-800 fas fa-level-down-alt reorder_basicdata" ' +
-                                '      data-order_type="increase"' +
-                                '      data-id="' + full.id + '" ' +
-                                '      data-parent_id="' + full.parent_id + '" >' +
-                                '   </button>';
+                    },
+                    {
+                        data: '',
+                        "orderable": false,
+                        searchable: false,
+                        title: 'عملیات',
+                        mRender: function (data, type, full) {
+                            return '<button type="button" class="btn-action btn-delete basic_data_delete  fa fa-times" title="حذف" data-id="' + full.id + '"></button>' + '' +
+                                '<button type="button" class="btn-action btn-edit basic_data_edit fas fa-edit mr-3" title="ویرایش" data-title="' + full.title + '" data-id="' + full.id + '"></button>' +
+                                '<a title="زیرمجموعه ها" class="jsPanels mr-3" href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"><button type="button" class="btn-action btn-edit fas fa-clipboard-list" ></button></a>';
                         }
                     }
-                },
-                {
-                    data: '',
-                    "orderable": false,
-                    searchable: false,
-                    title: 'عملیات',
-                    mRender: function (data, type, full) {
-                        return '<button type="button" class="btn-action btn-delete basic_data_delete  fa fa-times" title="حذف" data-id="' + full.id + '"></button>' + '' +
-                            '<button type="button" class="btn-action btn-edit basic_data_edit fas fa-edit mr-3" title="ویرایش" data-title="' + full.title + '" data-id="' + full.id + '"></button>' +
-                            '<a title="زیرمجموعه ها" class="jsPanels mr-3" href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"><button type="button" class="btn-action btn-edit fas fa-clipboard-list" ></button></a>';
-                    }
-                }
 
-            ];
+                ];
         }
         else {
             columns = [
@@ -92,7 +92,6 @@
             processing: true,
             serverSide: true,
             language: {
-
                 "sEmptyTable": "هیچ داده ای در جدول وجود ندارد",
                 "sInfo": "نمایش _START_ تا _END_ از _TOTAL_ رکورد",
                 "sInfoEmpty": "نمایش 0 تا 0 از 0 رکورد",
@@ -123,11 +122,11 @@
                 url: '{{route('LBDM.GetBasicData')}}',
                 type: 'post',
                 data: {filter_id: filter_var_id}
-
             },
             columns: columns
         });
     }
+
     get_datatable();
 
     //------------------------------------------------------------------------------------------------------------------//
@@ -256,6 +255,7 @@
             }
         });
     }
+
     function insert_basicdata(FormData) {
         $.ajax({
             type: "POST",
@@ -302,12 +302,11 @@
         }
     });
 
-    init_select2('#select_parent', '{{route('LBDM.AutoCompleteBasicdat')}}','جستجو کنید ...');
-    init_select2('#parent_id', '{{route('LBDM.AutoCompleteBasicdat')}}',false,false,true, 'جستجو کنید ...');
-    var data_parent ={id: 0,text: 'ریشه'};
+    init_select2('#select_parent', '{{route('LBDM.AutoCompleteBasicdat')}}', 'جستجو کنید ...');
+    init_select2('#parent_id', '{{route('LBDM.AutoCompleteBasicdat')}}', false, false, true, 'جستجو کنید ...');
+    var data_parent = {id: 0, text: 'ریشه'};
     var newOption = new Option(data_parent.text, data_parent.id, true, true);
     $('#parent_id').append(newOption).trigger('change');
-
 
 
     $(document).on('click', '#btn_filter', function () {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,7 +8,6 @@
 
     <!-- All CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/laravel_basicdata_manager/build/css/init_core_LBDM.min.css')}}">
-
 
     <!-- Optional CSS -->
     @yield('plugin_css')
