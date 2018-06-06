@@ -59,7 +59,7 @@
                                     </div>
                                     <div id="new" class="tab-pane">
                                         <div id="insert_basicdata_form_id"></div>
-                                        <form id="FormInsertBasicData">
+                                        <form id="FormInsertBasicData" class="form-horizontal inner_tab col-xs-12">
                                             <div class="space-10"></div>
                                             <div class="form-group col-xs-12">
                                                 <lable class="col-sm-3 text-center">
