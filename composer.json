@@ -1,7 +1,7 @@
 {
     "name": "artincms/laravel_basicdata_manager",
-    "description": "Official ArtinCMS.com Laravel Article Manager Package",
-    "keywords": ["laravel", "ArtinCMS", "مدیریت اخبار", "مدیریت محتوی", "Article manager", "storage", "artincms.com","آرتین سی ام اس"],
+    "description": "Official ArtinCMS.com Laravel BasicData Manager Package",
+    "keywords": ["laravel", "ArtinCMS", "مدیریت داده های اولیه", "مدیریت داده ها", "BasicData manager", "Basic", "artincms.com","آرتین سی ام اس"],
     "license": "MIT",
     "authors": [
         {

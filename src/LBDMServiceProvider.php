@@ -25,7 +25,7 @@ class LBDMServiceProvider extends ServiceProvider
 
 	    // for publish the assets files into main app
 	    $this->publishes([
-		    __DIR__.'/assets' => public_path('vendor/LBDM'),
+		    __DIR__.'/assets' => public_path('vendor/laravel_basicdata_manager'),
 	    ], 'public');
 
 	    // for publish the sms_ir config file to the main app config folder
