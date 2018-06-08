@@ -27,6 +27,7 @@ class CreateBasicdataValueTable extends Migration
             $table->string('validation',255)->nullable()->default(null);
             $table->string('extra_field',255)->nullable()->default(null);
             $table->string('dev_comment',255)->nullable()->default(null);
+            $table->integer('order')->nullable()->default(null);
             $table->enum('is_active',['0','1'])->default('1');
             $table->integer('created_by')->nullable()->default(null)->unsigned();
             $table->timestamps();

@@ -3,9 +3,9 @@
         <div class="space-10"></div>
         <input type="hidden" name="id" value="{{$basicdata->id}}">
         <div class="form-group col-xs-12">
-            <lable class="col-sm-3 text-center">
+            <label class="col-sm-3 text-center">
                 <span class="red-star">*</span>
-                <span>والد:</span></lable>
+                <span>والد:</span></label>
             <div class="col-sm-5">
                 <select class="form-control" name="parent_id_edit" id="parent_id_edit">
                     <option value="{{$basicdata->parent_id}}">scc</option>
@@ -14,44 +14,44 @@
             <div class="col-sm-4" id="#error_title"></div>
         </div>
         <div class="form-group col-xs-12">
-            <lable class="col-sm-3 text-center"><span
-                        class="red-star">*</span><span>عنوان:</span></lable>
+            <label class="col-sm-3 text-center"><span
+                        class="red-star">*</span><span>عنوان:</span></label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" name="title" value="{{$basicdata->title}}"/>
             </div>
             <div class="col-sm-4" id="#error_title"></div>
         </div>
         <div class="form-group col-xs-12">
-            <lable class="col-sm-3 text-center"><span
+            <label class="col-sm-3 text-center"><span
                         class="red-star">*</span><span>عنوان مورد استفاده:</span>
-            </lable>
+            </label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" name="dev_title" value="{{$basicdata->dev_title}}"/>
             </div>
             <div class="col-sm-4" id="#error_dev_title"></div>
         </div>
         <div class="form-group col-xs-12">
-            <lable class="col-sm-3 text-center"><span class="red-star"></span><span>توضیحات:</span>
-            </lable>
+            <label class="col-sm-3 text-center"><span class="red-star"></span><span>توضیحات:</span>
+            </label>
             <div class="col-sm-5">
                 <textarea type="text" class="form-control" name="comment">{{$basicdata->comment}}</textarea>
             </div>
             <div class="col-sm-4" id="#error_comment"></div>
         </div>
         <div class="form-group col-xs-12">
-            <lable class="col-sm-3 text-center">
+            <label class="col-sm-3 text-center">
                 <span class="red-star"></span>
-                <span>داده های بیشتر:</span></lable>
+                <span>داده های بیشتر:</span></label>
             <div class="col-sm-5">
                 <input  type="text" class="form-control" name="extra_field" id="extra_field" value="{{$basicdata->extra_field}}"/>
             </div>
             <div class="col-sm-4" id="#error_title"></div>
         </div>
         <div class="form-group col-xs-12">
-            <lable class="col-sm-3 text-center">
+            <label class="col-sm-3 text-center">
                 <span class="red-star">*</span>
                 <span>وضعیت:</span>
-            </lable>
+            </label>
             <div class="col-sm-5 text-right">
                 <span>
                     <input type="radio" name="is_active" value="1" @if($basicdata->is_active==1) checked @endif/>
@@ -65,7 +65,7 @@
             <div class="col-sm-4" id="#error_msg_is_active"></div>
         </div>
         <div class="form-group col-xs-12">
-            <lable class="col-sm-3"></lable>
+            <label class="col-sm-3"></label>
             <div class="col-sm-5 text-right">
                 <input type="button" class="btn btn-warning" id="submit_update_basicdata" value="ویرایش"/>
             </div>

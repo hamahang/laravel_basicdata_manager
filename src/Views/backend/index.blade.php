@@ -34,17 +34,19 @@
                                         </div>
                                         <div id="div_base_filter_basicdata" class="container">
                                             <form id="FormFilter">
-                                                <div class="form-group  col-12">
-                                                    <lable class="col-sm-1 text-center">
+                                                <div class="form-group col-xs-12 row">
+                                                    <label class="col-sm-1 text-center">
                                                         <span class="red-star"></span><span>والد:</span>
-                                                    </lable>
+                                                    </label>
                                                     <div class="col-sm-5 text-right">
                                                         <select class="form-control" name="filter_id" id="select_parent"></select>
                                                     </div>
-                                                    <div class="col-sm-4">
-                                                        <button type="button" id="btn_filter" class="btn btn-success btn-md">اعمال</button>
+                                                    <div class="col-sm-5">
+                                                        <button type="button" id="btn_filter_basicdata" class="btn btn-success btn-md">اعمال</button>
+                                                        <button type="button" id="btn_filter_basicdata_cancel" class="btn btn-default btn-md">لغو فیلتر</button>
                                                     </div>
                                                 </div>
+                                                <div class="hr"></div>
                                             </form>
                                         </div>
                                         <div class="container">
@@ -52,77 +54,95 @@
                                         </div>
                                     </div>
                                     <div id="new" class="tab-pane">
-                                        <div id="insert_basicdata_form_id"></div>
-                                        <form id="FormInsertBasicData" class="form-horizontal inner_tab col-xs-12">
-                                            <div class="space-10"></div>
-                                            <div class="form-group col-12">
-                                                <lable class="col-sm-3 text-center">
+                                        <div id="insert_basicdata_form_id" class="form_message_area"></div>
+                                        <div class="space-10"></div>
+                                        <form id="FormInsertBasicData" class="form-horizontal inner_tab col-xs-12 relative">
+
+                                            {{--<div class="form-group col-xs-12 fg_parent_id">
+                                                <label class="col-sm-3 text-center control-label label_parent_id" for="parent_id">
+                                                    <span class="more_info"></span>
                                                     <span class="red-star">*</span>
-                                                    <span>والد:</span></lable>
+                                                    <span>والد:</span>
+                                                </label>
                                                 <div class="col-sm-5">
                                                     <select class="form-control" name="parent_id" id="parent_id">
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-4" id="#error_title"></div>
-                                            </div>
-                                            <div class="form-group col-12">
-                                                <lable class="col-sm-3 text-center">
+                                                <div class="col-sm-4 messages"></div>
+                                            </div>--}}
+                                            <div class="form-group col-xs-12 fg_title">
+                                                <label class="col-sm-3 text-center control-label label_title" for="title">
+                                                    <span class="more_info"></span>
                                                     <span class="red-star">*</span>
-                                                    <span>عنوان:</span></lable>
+                                                    <span>عنوان:</span>
+                                                </label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control" name="title"/>
+                                                    <input type="text" class="form-control" name="title" id="title"/>
                                                 </div>
-                                                <div class="col-sm-4" id="#error_title"></div>
+                                                <div class="col-sm-4 messages"></div>
                                             </div>
-                                            <div class="form-group col-12">
-                                                <lable class="col-sm-3 text-center">
+                                  {{--          <div class="form-group col-xs-12 fg_dev_title">
+                                                <label class="col-sm-3 text-center control-label label_dev_title" for="dev_title">
+                                                    <span class="more_info"></span>
                                                     <span class="red-star">*</span>
                                                     <span>عنوان مورد استفاده:</span>
-                                                </lable>
+                                                </label>
                                                 <div class="col-sm-5">
                                                     <input type="text" class="form-control" name="dev_title"/>
                                                 </div>
-                                                <div class="col-sm-4" id="#error_dev_title"></div>
+                                                <div class="col-sm-4 messages"></div>
                                             </div>
-                                            <div class="form-group col-12">
-                                                <lable class="col-sm-3 text-center">
+                                            <div class="form-group col-xs-12 fg_comment">
+                                                <label class="col-sm-3 text-center control-label label_comment" for="comment">
+                                                    <span class="more_info"></span>
                                                     <span class="red-star"></span>
                                                     <span>توضیحات:</span>
-                                                </lable>
+                                                </label>
                                                 <div class="col-sm-5">
                                                     <textarea type="text" class="form-control" name="comment"></textarea>
                                                 </div>
-                                                <div class="col-sm-4" id="#error_comment"></div>
+                                                <div class="col-sm-4 messages"></div>
                                             </div>
-                                            <div class="form-group col-12">
-                                                <lable class="col-sm-3 text-center">
+                                            <div class="form-group col-xs-12 fg_dev_comment">
+                                                <label class="col-sm-3 text-center control-label label_dev_comment" for="dev_comment">
+                                                    <span class="more_info"></span>
+                                                    <span class="red-star"></span>
+                                                    <span>dev_comment:</span>
+                                                </label>
+                                                <div class="col-sm-5">
+                                                    <textarea type="text" class="form-control" name="dev_comment"></textarea>
+                                                </div>
+                                                <div class="col-sm-4 messages"></div>
+                                            </div>
+                                            <div class="form-group col-xs-12 fg_extra_field">
+                                                <label class="col-sm-3 text-center control-label label_extra_field" for="extra_field">
+                                                    <span class="more_info"></span>
                                                     <span class="red-star"></span>
                                                     <span>داده های بیشتر:</span>
-                                                </lable>
+                                                </label>
                                                 <div class="col-sm-5">
                                                     <input type="text" class="form-control" name="extra_field" id="extra_field"/>
                                                 </div>
-                                                <div class="col-sm-4" id="#error_title"></div>
+                                                <div class="col-sm-4 messages"></div>
                                             </div>
-                                            <div class="form-group  col-12">
-                                                <lable class="col-sm-3 text-center">
+                                            <div class="form-group col-xs-12 fg_is_active">
+                                                <label class="col-sm-3 text-center control-label label_is_active" for="is_active">
+                                                    <span class="more_info"></span>
                                                     <span class="red-star">*</span>
                                                     <span>وضعیت:</span>
-                                                </lable>
+                                                </label>
                                                 <div class="col-sm-5 text-right">
                                                     <input type="radio" name="is_active" value="1" checked/>
                                                     <span> فعال </span>
                                                     <input type="radio" name="is_active" value="0"/>
                                                     <span> غیرفعال </span>
                                                 </div>
-                                                <div class="col-sm-4" id="#error_msg_is_active"></div>
-                                            </div>
-                                            <div class="form-group col-12">
-                                                <lable class="col-sm-3"></lable>
-                                                <div class="col-sm-5 text-right">
-                                                    <input type="button" class="btn btn-success" id="submit_insert_basicdata" value="ثبت"/>
+                                                <div class="col-sm-4 messages"></div>
+                                            </div>--}}
+                                            <div class="form-group col-xs-12 fg_submit">
+                                                <div class="col-sm-5 col-sm-offset-3">
+                                                    <button type="submit" name="submit" class="btn btn-success">ثبت</button>
                                                 </div>
-                                                <div class="col-sm-4"></div>
                                             </div>
                                         </form>
                                     </div>

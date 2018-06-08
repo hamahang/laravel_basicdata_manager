@@ -1,10 +1,10 @@
 <div id="div_insert">
-    <button class="btn btn-success btn-lg" id="btn_insert_basicdata_value" type="button">ثبت</button>
+    <button class="btn btn-success btn-md" id="btn_insert_basicdata_value" type="button">ثبت</button>
 </div>
 <div id="div_update">
-    <button class="btn btn-warning btn-lg" id="btn_update_basicdata_value" type="button">ویرایش</button>
+    <button class="btn btn-warning btn-md" id="btn_update_basicdata_value" type="button">ویرایش</button>
 </div>
-<button class="btn btn-default btn-lg" id="btn_close_basicdata_value" type="button">بستن</button>
+<button class="btn btn-default btn-md" id="btn_close_basicdata_value" type="button">بستن</button>
 <script>
     $("#div_insert").hide();
     $("#div_update").hide();

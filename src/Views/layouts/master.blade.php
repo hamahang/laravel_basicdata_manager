@@ -8,6 +8,7 @@
 
     <!-- All CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/laravel_basicdata_manager/build/css/init_core_LBDM.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendor/laravel_basicdata_manager/build/css/style.css')}}">
 
     <!-- Optional CSS -->
     @yield('plugin_css')

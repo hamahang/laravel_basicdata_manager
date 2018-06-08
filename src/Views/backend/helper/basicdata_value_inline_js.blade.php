@@ -1,8 +1,62 @@
 <script src="{{asset('vendor/LBDM/js/select2.min.js')}}"></script>
 <script>
 
-    var datatable_basicdata_value;
-    datatable_basicdata_value = $('#basicdata_value_table').DataTable({
+   /* var datatable_basicdata_value;*/
+    var columns=[
+        {data: 'title', name: 'title', title: 'عنوان',width:'20%'},
+        {data: 'dev_title', name: 'dev_title', title: 'عنوان مورد استفاده',width:'20%'} ,
+        {data: 'comment', name: 'comment', title: 'توضیحات',width:'25%'},
+        {data: 'value', name: 'value', title: 'مقدار',width:'10%'},
+        {
+            title: "ترتیب",
+            data: 'order',
+            name: 'order',
+            width:'15%',
+            mRender: function (data, type, full) {
+                var order = datatable_basicdata_value.order();
+                if(order[0][1]=='desc') {
+                    return '<button type="button" class="btn btn-sm bg-info-400 fas fa-level-up-alt reorder_basicdata_value" ' +
+                        '      data-order_type="increase" ' +
+                        '      data-id="' + full.id + '" ' +
+                        '     data-basicdata_id="' + full.basicdata_id + '" >' +
+                        '   </button>' +
+                        '<span class="order_number">' + full.order + '</span>' +
+                        ' <button type="button" class="btn btn-sm bg-info-800 fas fa-level-down-alt reorder_basicdata_value" ' +
+                        '      data-order_type="decrease"' +
+                        '       data-id="' + full.id + '"' +
+                        '       data-basicdata_id="' + full.basicdata_id + '" >' +
+                        '   </button>';
+                }
+                else{
+                    return '<button type="button" class="btn btn-sm bg-info-400 fas fa-level-up-alt reorder_basicdata_value" ' +
+                        '      data-order_type="decrease" ' +
+                        '      data-id="' + full.id + '" ' +
+                        '     data-basicdata_id="' + full.basicdata_id + '" >' +
+                        '   </button>' +
+                        '<span class="order_number">' + full.order + '</span>' +
+                        ' <button type="button" class="btn btn-sm bg-info-800 fas fa-level-down-alt reorder_basicdata_value" ' +
+                        '      data-order_type="increase"' +
+                        '       data-id="' + full.id + '"' +
+                        '       data-basicdata_id="' + full.basicdata_id + '" >' +
+                        '   </button>';
+                }
+            }
+        },
+        {
+            data: '',
+            "orderable": false,
+            searchable: false,
+            title: 'عملیات',
+            width:'10%',
+            mRender: function (data, type, full) {
+                return '<button type="button" class="btn btn-danger btn-sm btn-operation basicdata_value_delete  fa fa-times" data-id="' + full.id + '"></button>' + '' +
+                    '<button type="button" class="btn btn-warning btn-sm btn-operation basicdata_value_edit fa fa-edit color-white" data-title="' + full.title + '" data-id="' + full.id + '" databasic-id=""></button>';
+            }
+        }
+    ];
+    var ajax_url='{{route('LBDM.GetBasicDataValue')}}';
+    dataTablesGrid('#basicdata_value_table', 'datatable_basicdata_value', ajax_url, columns,{basicdata_id:{{$basic_id}}});
+    {{-- datatable_basicdata_value = $('#basicdata_value_table').DataTable({
         processing: true,
         serverSide: true,
         language: {
@@ -40,61 +94,8 @@
                 "basicdata_id":{{$basic_id}}
             }
         },
-        columns: [
 
-            {data: 'title', name: 'title', title: 'عنوان',width:'20%'},
-            {data: 'dev_title', name: 'dev_title', title: 'عنوان مورد استفاده',width:'20%'} ,
-            {data: 'comment', name: 'comment', title: 'توضیحات',width:'25%'},
-            {data: 'value', name: 'value', title: 'مقدار',width:'10%'},
-            {
-                title: "ترتیب",
-                data: 'order',
-                name: 'order',
-                width:'15%',
-                mRender: function (data, type, full) {
-                    var order = datatable_basicdata_value.order();
-                    if(order[0][1]=='desc') {
-                        return '<button type="button" class="btn btn-xs bg-info-400 fas fa-level-up-alt reorder_basicdata_value" ' +
-                            '      data-order_type="increase" ' +
-                            '      data-id="' + full.id + '" ' +
-                            '     data-basicdata_id="' + full.basicdata_id + '" >' +
-                            '   </button>' +
-                            '<span class="order_number">' + full.order + '</span>' +
-                            ' <button type="button" class="btn btn-xs bg-info-800 fas fa-level-down-alt reorder_basicdata_value" ' +
-                            '      data-order_type="decrease"' +
-                            '       data-id="' + full.id + '"' +
-                            '       data-basicdata_id="' + full.basicdata_id + '" >' +
-                            '   </button>';
-                    }
-                    else{
-                        return '<button type="button" class="btn btn-xs bg-info-400 fas fa-level-up-alt reorder_basicdata_value" ' +
-                            '      data-order_type="decrease" ' +
-                            '      data-id="' + full.id + '" ' +
-                            '     data-basicdata_id="' + full.basicdata_id + '" >' +
-                            '   </button>' +
-                            '<span class="order_number">' + full.order + '</span>' +
-                            ' <button type="button" class="btn btn-xs bg-info-800 fas fa-level-down-alt reorder_basicdata_value" ' +
-                            '      data-order_type="increase"' +
-                            '       data-id="' + full.id + '"' +
-                            '       data-basicdata_id="' + full.basicdata_id + '" >' +
-                            '   </button>';
-                    }
-                }
-            },
-            {
-                data: '',
-                "orderable": false,
-                searchable: false,
-                title: 'عملیات',
-                width:'10%',
-                mRender: function (data, type, full) {
-                    return '<button type="button" class="btn-action btn-delete basicdata_value_delete  fa fa-times" data-id="' + full.id + '"></button>' + '' +
-                        '<button type="button" class="btn-action btn-edit basicdata_value_edit fas fa-edit mr-3" data-title="' + full.title + '" data-id="' + full.id + '" databasic-id=""></button>';
-                }
-            }
-
-        ]
-    });
+    });--}}
    //------------------------------------------------------------------------------------------------------------------//
    $(document).off("click", '.reorder_basicdata_value');
    $(document).on('click', '.reorder_basicdata_value', function () {
@@ -175,14 +176,14 @@
 
     });
 
-    $(document).off('click', '#submit_insert_basicdata_value');
+/*    $(document).off('click', '#submit_insert_basicdata_value');
     $(document).on('click', '#submit_insert_basicdata_value', function () {
         var formElement = document.querySelector('#FormInsertBasicDataValue');
         var formData = new FormData(formElement);
         $('#FormInsertBasicDataValue  .error_msg').html('');
         $("#FormInsertBasicDataValue  .input_with_validation_error").removeClass("input_with_validation_error");
         insert_basicdata_value(formData);
-    });
+    });*/
 
     $(document).off('click', '#submit_update_basicdata_value');
     $(document).on('click', '#submit_update_basicdata_value', function () {
@@ -225,7 +226,7 @@
         });
     }
 
-    function insert_basicdata_value(FormData) {
+   {{--function insert_basicdata_value(FormData) {
         $.ajax({
             type: "POST",
             url: "{{route('LBDM.InsertBasicDataValue')}}",
@@ -257,7 +258,39 @@
             error: function (e) {
             }
         });
-    }
+    } --}}
+   var constraints = {
+           title: {
+               presence: {message: '^<strong>عنوان الزامیست</strong>'}
+           }
+   }
+   var form = document.querySelector("#FormInsertBasicDataValue");
+   init_validatejs(form, constraints, showSuccessInsert);
 
+   function showSuccessInsert(formElement) {
+       var formData = new FormData(formElement);
+       $.ajax({
+           type: "POST",
+           url: '{{ route('backend.hotel_insert')}}',
+           dataType: "json",
+           data: formData,
+           processData: false,
+           contentType: false,
+           success: function (data) {
+               if (data.success == true) {
+                   $("#FormInsertBasicDataValue .total_loader").remove();
+                   $("#FormInsertBasicDataValue").find('input:text, input:password, input:file,textarea').val('');
+                   $("#FormInsertBasicDataValue").find('select').val('0');
+
+
+               }
+               else {
+                   $("#FormInsertBasicDataValue .total_loader").remove();
+                   showMessages(data.message, 'message_basic_data_value_insert', 'error', formElement);
+                   showErrors(form, data.errors);
+               }
+           }
+       });
+   }
 
 </script>

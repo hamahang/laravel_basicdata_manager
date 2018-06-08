@@ -1,0 +1,19 @@
+.btn-operation {
+    padding: 4px 7px !important;
+    margin-left: 3px;
+    font-size: 13px;
+    max-width: 27px;
+}
+.color-white{
+    color:white !important;
+}
+.bg-info-400 {
+    background-color: #26C6DA;
+    border-color: #26C6DA;
+    color: #fff;
+}
+.bg-info-800 {
+    background-color: #00838F;
+    border-color: #00838F;
+    color: #fff;
+}

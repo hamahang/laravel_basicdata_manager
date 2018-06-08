@@ -49,6 +49,7 @@ class LBDMController extends Controller
 
     public function list_basicdata(Request $request)
     {
+
         if(isset($request->filter_id)&& $request->filter_id)
         {
             return datatables()->eloquent(
@@ -212,8 +213,8 @@ class LBDMController extends Controller
             $basic_value = new BasicDataValue();
             $basic_value->basicdata_id = $request->basicdata_id;
             $basic_value->title = $request->title;
-            $basic_value->extra_field = $request->extra_field;
             $basic_value->dev_title = $request->dev_title;
+            $basic_value->extra_field = $request->extra_field;
             $basic_value->is_active = $request->is_active;
             $basic_value->value = $request->dev_val;
             $basic_value->save();
