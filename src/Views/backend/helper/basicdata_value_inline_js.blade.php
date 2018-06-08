@@ -260,12 +260,12 @@
         });
     } --}}
    var constraints = {
-           title: {
+    /*       title: {
                presence: {message: '^<strong>عنوان الزامیست</strong>'}
-           }
-   }
+           }*/
+   };
    var form = document.querySelector("#FormInsertBasicDataValue");
-   init_validatejs(form, constraints, showSuccessInsert);
+   init_validatejs(form, constraints, showSuccessInsert,'#FormInsertBasicDataValue');
 
    function showSuccessInsert(formElement) {
        var formData = new FormData(formElement);

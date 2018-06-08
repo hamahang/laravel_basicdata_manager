@@ -19,9 +19,10 @@
             </table>
         </div>
         <div id="new_basicdata_value" class="tab-pane fade">
+            <div class="space-10"></div>
             <div id="message_basic_data_value_insert" class="form_message_area"></div>
-            <form id="FormInsertBasicDataValue">
-                <div class="space-10"></div>
+            <form id="FormInsertBasicDataValue" class="form-horizontal">
+
                 {{-- <div class="form-group col-xs-12">
                     <label class="col-sm-3 text-center"><span
                                 class="red-star">*</span><span>والد:</span></label>
@@ -36,12 +37,12 @@
                     </div>
                     <div class="col-sm-4" id="#error_title"></div>
                 </div>--}}
-                <div class="form-group col-xs-12  fg_title">
+                <div class="form-group col-xs-12 fg_title">
                     <label class="col-sm-3 text-center control-label label_title" for="title">
                         <span class="more_info"></span>
                         <span class="red-star">*</span>
                         <span>عنوان:</span>
-                        </label>
+                    </label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" name="title"/>
                     </div>
@@ -104,8 +105,10 @@
                     <div class="col-sm-4"></div>
                 </div>
                 --}}
-                <div class="col-sm-5 col-sm-offset-3">
-                    <button type="submit" name="submit" id="submit_insert_basicdata_value" class="btn btn-success">ثبت وتایید</button>
+                <div class="form-group fg_submit col-xs-12">
+                    <div class="col-sm-5 col-sm-offset-3">
+                        <button type="submit" name="submit" id="submit_insert_basicdata_value" class="btn btn-success">ثبت وتایید</button>
+                    </div>
                 </div>
             </form>
         </div>

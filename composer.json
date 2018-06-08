@@ -10,6 +10,12 @@
         }
     ],
     "autoload": {
+        "files": [
+            "src/Helpers/Functions/API.php"
+        ],
+        "classmap": [
+            "app/Helpers/Classes"
+        ],
         "psr-4": {
             "ArtinCMS\\LBDM\\": "src"
         }

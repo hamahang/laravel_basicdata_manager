@@ -79,7 +79,6 @@ class LBDMController extends Controller
            ]
        );
        if ($validator->fails()) {
-
            $res =
                [
                    'success' => false,
@@ -104,7 +103,7 @@ class LBDMController extends Controller
             ]
         );
         if ($validator->fails()) {
-            /* $error = validation_error_to_api_json($validator->errors());*/
+             $error = validation_error_to_api_json($validator->errors());
             $res =
                 [
                     'success' => false,
