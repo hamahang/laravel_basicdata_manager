@@ -58,7 +58,7 @@
                                         <div class="space-10"></div>
                                         <form id="FormInsertBasicData" class="form-horizontal inner_tab col-xs-12 relative">
 
-                                            {{--<div class="form-group col-xs-12 fg_parent_id">
+                                            <div class="form-group col-xs-12 fg_parent_id">
                                                 <label class="col-sm-3 text-center control-label label_parent_id" for="parent_id">
                                                     <span class="more_info"></span>
                                                     <span class="red-star">*</span>
@@ -69,7 +69,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4 messages"></div>
-                                            </div>--}}
+                                            </div>
                                             <div class="form-group col-xs-12 fg_title">
                                                 <label class="col-sm-3 text-center control-label label_title" for="title">
                                                     <span class="more_info"></span>
@@ -81,7 +81,7 @@
                                                 </div>
                                                 <div class="col-sm-4 messages"></div>
                                             </div>
-                                  {{--          <div class="form-group col-xs-12 fg_dev_title">
+                                         <div class="form-group col-xs-12 fg_dev_title">
                                                 <label class="col-sm-3 text-center control-label label_dev_title" for="dev_title">
                                                     <span class="more_info"></span>
                                                     <span class="red-star">*</span>
@@ -138,7 +138,7 @@
                                                     <span> غیرفعال </span>
                                                 </div>
                                                 <div class="col-sm-4 messages"></div>
-                                            </div>--}}
+                                            </div>
                                             <div class="form-group col-xs-12 fg_submit">
                                                 <div class="col-sm-5 col-sm-offset-3">
                                                     <button type="submit" name="submit" class="btn btn-success">ثبت</button>
