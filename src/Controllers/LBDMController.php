@@ -100,6 +100,20 @@ class LBDMController extends Controller
                 'dev_title' => 'required|string',
                 'is_active' => 'required|integer:0,1',
                 'comment' => 'nullable|string',
+                'dev_comment' => 'nullable|string',
+                'extra_field' => 'nullable|string',
+            ],[
+                'parent_id.required'=>'',
+                'parent_id.exists_or_zero'=>'',
+                'title.required'=>'',
+                'title.string'=>'',
+                'dev_title.required'=>'',
+                'dev_title.string'=>'',
+                'is_active.required'=>'',
+                'is_active.integer'=>'',
+                'comment.string'=>'',
+                'dev_comment.string'=>'',
+                'extra_field.string'=>'',
             ]
         );
         if ($validator->fails()) {
@@ -120,9 +134,14 @@ class LBDMController extends Controller
             $basic->parent_id = $request->parent_id;
             $basic->extra_field = $request->extra_field;
             $basic->save();
-            $result['message'] = 'عملیات ثبت با موفقیت انجام شد';
-            $result['success'] = true;
-            return json_encode($result);
+            $res['success'] = true;
+            $res['message'] =
+                [
+                    [
+                        'title' => 'ثبت با موفقیت انجام شد'
+                    ]
+                ];
+            return json_encode($res);
         }
     }
 

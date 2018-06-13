@@ -292,13 +292,18 @@
 
     var constraints_basicdata_insert = {
 
-        /*   title: {
+      /* title: {
          presence: {message: '^<strong>عنوان الزامیست</strong>'}
-         }*/
+         },*/
+        dev_title: {
+         presence: {message: '^<strong>عنوان مورد استفاده الزامیست</strong>'}
+         },
+        is_active: {
+         presence: {message: '^<strong>انتخاب وضعیت الزامیست</strong>'}
+         }
 
     };
     var form_basicdata_insert = document.querySelector("#FormInsertBasicData");
-    console.log(form_basicdata_insert);
     init_validatejs(form_basicdata_insert, constraints_basicdata_insert, showSuccessBasicdata);
 
     function showSuccessBasicdata(formElement) {
@@ -311,57 +316,20 @@
             processData: false,
             contentType: false,
             success: function (data) {
+                $("#FormInsertBasicData .total_loader").remove();
                 if (data.success == true) {
-                    /* $("#FormInsertBasicData .total_loader").remove();
                      $("#FormInsertBasicData").find('input:text, input:password, input:file,textarea').val('');
-                     $("#FormInsertBasicData").find('select').val('0');*/
+                     $("#FormInsertBasicData").find('select').val('0');
+                     $('#tab_list a').click();
+                    datatable_basicdata.ajax.reload();
                 }
                 else {
-                    /*      $("#FormInsertBasicData .total_loader").remove();
                      showMessages(data.message, 'insert_basicdata_form_id', 'error', formElement);
-                     showErrors(form, data.errors);*/
+                     showErrors(formData, data.errors);
                 }
             }
         });
     }
-    {{--   $(document).on('click', '#submit_insert_basicdata', function () {
-       alert('sdsds');
-    /*   var formElement = document.querySelector('#FormInsertBasicData');
-       var formData = new FormData(formElement);
-       $('#insert_basicdata_form_id  .error_msg').html('');
-       $("#insert_basicdata_form_id  .input_with_validation_error").removeClass("input_with_validation_error");
-       insert_basicdata(formData); */
-   });
- function insert_basicdata(FormData) {
-       $.ajax({
-           type: "POST",
-           url: "{{route('LBDM.InsertBasicData')}}",
-           data: FormData,
-           dataType: "json",
-           processData: false,
-           contentType: false,
-           success: function (data) {
-               if (data.success == true) {
-                   window.datatable_basicdata.ajax.reload();
-                   $("#tab_list a").click();
-
-               }
-               else {
-                   $.each(data.error, function (key, err) {
-                       var input_name = err.e_key;
-                       $("#insert_basicdata_form_id input[name= " + input_name + " ]").addClass('input_with_validation_error');
-                       $.each(err.e_values, function (key, value) {
-                           $('#insert_basicdata_form_id #error_msg_' + input_name).html(value.e_text);
-                       })
-                   });
-               }
-           }
-           ,
-           error: function (e) {
-
-           }
-       });
-   }--}}
 
 $(document).on('click', '#submit_update_basicdata', function () {
         var formElement = document.querySelector('#FormUpdateBasicData');
@@ -369,6 +337,7 @@ $(document).on('click', '#submit_update_basicdata', function () {
         $('#update_basicdata_form_id  .error_msg').html('');
         $("#update_basicdata_form_id  .input_with_validation_error").removeClass("input_with_validation_error");
         update_basicdata(formData);
+
     });
 
     function update_basicdata(FormData) {
