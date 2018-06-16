@@ -81,7 +81,7 @@
                                                 </div>
                                                 <div class="col-sm-4 messages"></div>
                                             </div>
-                                            <div class="form-group col-12 fg_dev_title row">
+                                            {{--<div class="form-group col-12 fg_dev_title row">
                                                 <label class="col-sm-3 text-center control-label label_dev_title" for="dev_title">
                                                     <span class="more_info"></span>
                                                     <span class="red-star">*</span>
@@ -138,7 +138,7 @@
                                                     <span> غیرفعال </span>
                                                 </div>
                                                 <div class="col-sm-4 messages"></div>
-                                            </div>
+                                            </div>--}}
                                             <div class="form-group col-12 fg_submit row">
                                                 <div class="col-sm-5 offset-sm-3">
                                                     <button type="submit" name="submit" class="btn btn-success">ثبت</button>

@@ -295,12 +295,12 @@
       /* title: {
          presence: {message: '^<strong>عنوان الزامیست</strong>'}
          },*/
-        dev_title: {
+    /*    dev_title: {
          presence: {message: '^<strong>عنوان مورد استفاده الزامیست</strong>'}
          },
         is_active: {
          presence: {message: '^<strong>انتخاب وضعیت الزامیست</strong>'}
-         }
+         }*/
 
     };
     var form_basicdata_insert = document.querySelector("#FormInsertBasicData");
