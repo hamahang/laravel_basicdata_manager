@@ -17,3 +17,21 @@
     border-color: #00838F;
     color: #fff;
 }
+.hidden{
+    display: none;
+}
+.delete_tab_ico{
+    color: #ec0606;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+}
+.order_span{
+    background-color: #e8cdcd;
+    padding: 3px 10px;
+    margin-right: 4px;
+}
+.filter_icon
+{
+    font-size: 18px; color: rgb(82, 82, 82); margin-top: 20px; cursor: pointer;
+}

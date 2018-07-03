@@ -49,7 +49,6 @@ class LBDMController extends Controller
 
     public function list_basicdata(Request $request)
     {
-
         if(isset($request->filter_id)&& $request->filter_id)
         {
             return datatables()->eloquent(
@@ -60,9 +59,7 @@ class LBDMController extends Controller
                 })->make(true);
         }
         else{
-
-            return datatables()->eloquent(BasicData::with('Items')->orderBY('order','ASC')
-                ->orderBY('id','ASC'))
+            return datatables()->eloquent(BasicData::with('Items'))
                 ->addColumn('count_basic', function ($data) {
                     return $data->items->count();
                 })->make(true);
@@ -180,7 +177,7 @@ class LBDMController extends Controller
                 'title' => 'required|string',
                 'dev_title' => 'required|string',
                 'is_active' => 'required|integer:0,1',
-                'comment' => 'required|string',
+                'comment' => 'string',
             ]
         );
         if ($validator->fails()) {
@@ -197,6 +194,7 @@ class LBDMController extends Controller
             $basic->dev_title = $request->dev_title;
             $basic->is_active = $request->is_active;
             $basic->comment = $request->comment;
+            $basic->dev_comment = $request->dev_comment;
             $basic->dev_comment = $request->dev_comment;
             $basic->created_by = $request->created_by;
             $basic->parent_id = $request->parent_id;
@@ -329,8 +327,12 @@ class LBDMController extends Controller
             $result['view'] = view('LBDM::backend.helper.edit_basicdata')->render();
         } else {
             $basicdata = BasicData::find($request->id);
+            $basicdata_list=BasicData::where('id','<>',$basicdata->id)->get();
 
-            $result['view'] = view('LBDM::backend.helper.edit_basicdata')->with('basicdata', $basicdata)->render();
+            $result['view'] = view('LBDM::backend.helper.edit_basicdata')
+                ->with('basicdata', $basicdata)
+                ->with('basicdatas', $basicdata_list)
+                ->render();
             $result['success'] = true;
             return json_encode($result);
         }

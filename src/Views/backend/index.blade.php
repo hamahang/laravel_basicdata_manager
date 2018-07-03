@@ -30,7 +30,7 @@
                                 <div class="tab-content font-12">
                                     <div id="list" class="tab-pane active show">
                                         <div class="text-left">
-                                            <span class="fas fa-filter" id="basic_data_filter_icon" style="font-size: 25px;color: #525252;margin-top: 20px;cursor: pointer;"></span>
+                                            <span class="fas fa-filter filter_icon" id="basic_data_filter_icon" ></span>
                                         </div>
                                         <div id="div_base_filter_basicdata" class="container">
                                             <form id="FormFilter">
@@ -57,11 +57,10 @@
                                         <div id="insert_basicdata_form_id" class="form_message_area"></div>
                                         <div class="space-10"></div>
                                         <form id="FormInsertBasicData" class="form-horizontal inner_tab col-12 relative">
-
                                             <div class="form-group col-12 fg_parent_id row">
                                                 <label class="col-sm-3 text-center control-label label_parent_id" for="parent_id">
                                                     <span class="more_info"></span>
-                                                    <span class="red-star">*</span>
+                                                    <span class="red-star"></span>
                                                     <span>والد:</span>
                                                 </label>
                                                 <div class="col-sm-5">
@@ -81,7 +80,7 @@
                                                 </div>
                                                 <div class="col-sm-4 messages"></div>
                                             </div>
-                                            {{--<div class="form-group col-12 fg_dev_title row">
+                                            <div class="form-group col-12 fg_dev_title row">
                                                 <label class="col-sm-3 text-center control-label label_dev_title" for="dev_title">
                                                     <span class="more_info"></span>
                                                     <span class="red-star">*</span>
@@ -138,7 +137,7 @@
                                                     <span> غیرفعال </span>
                                                 </div>
                                                 <div class="col-sm-4 messages"></div>
-                                            </div>--}}
+                                            </div>
                                             <div class="form-group col-12 fg_submit row">
                                                 <div class="col-sm-5 offset-sm-3">
                                                     <button type="submit" name="submit" class="btn btn-success">ثبت</button>

@@ -5,7 +5,7 @@
     var columns=[
         {data: 'title', name: 'title', title: 'عنوان',width:'20%'},
         {data: 'dev_title', name: 'dev_title', title: 'عنوان مورد استفاده',width:'20%'} ,
-        {data: 'comment', name: 'comment', title: 'توضیحات',width:'25%'},
+        {data: 'comment', name: 'comment', title: 'توضیحات',width:'20%'},
         {data: 'value', name: 'value', title: 'مقدار',width:'10%'},
         {
             title: "ترتیب",
@@ -20,7 +20,7 @@
                         '      data-id="' + full.id + '" ' +
                         '     data-basicdata_id="' + full.basicdata_id + '" >' +
                         '   </button>' +
-                        '<span class="order_number">' + full.order + '</span>' +
+                        '<span class="order_span">' + full.order + '</span>' +
                         ' <button type="button" class="btn btn-sm bg-info-800 fas fa-level-down-alt reorder_basicdata_value" ' +
                         '      data-order_type="decrease"' +
                         '       data-id="' + full.id + '"' +
@@ -33,7 +33,7 @@
                         '      data-id="' + full.id + '" ' +
                         '     data-basicdata_id="' + full.basicdata_id + '" >' +
                         '   </button>' +
-                        '<span class="order_number">' + full.order + '</span>' +
+                        '<span class="order_span">' + full.order + '</span>' +
                         ' <button type="button" class="btn btn-sm bg-info-800 fas fa-level-down-alt reorder_basicdata_value" ' +
                         '      data-order_type="increase"' +
                         '       data-id="' + full.id + '"' +
@@ -47,7 +47,7 @@
             "orderable": false,
             searchable: false,
             title: 'عملیات',
-            width:'10%',
+            width:'12%',
             mRender: function (data, type, full) {
                 return '<button type="button" class="btn btn-danger btn-sm btn-operation basicdata_value_delete  fa fa-times" data-id="' + full.id + '"></button>' + '' +
                     '<button type="button" class="btn btn-warning btn-sm btn-operation basicdata_value_edit fa fa-edit color-white" data-title="' + full.title + '" data-id="' + full.id + '" databasic-id=""></button>';
@@ -56,47 +56,7 @@
     ];
     var ajax_url='{{route('LBDM.GetBasicDataValue')}}';
     dataTablesGrid('#basicdata_value_table', 'datatable_basicdata_value', ajax_url, columns,{basicdata_id:{{$basic_id}}});
-    {{-- datatable_basicdata_value = $('#basicdata_value_table').DataTable({
-        processing: true,
-        serverSide: true,
-        language: {
-
-            "sEmptyTable": "هیچ داده ای در جدول وجود ندارد",
-            "sInfo": "نمایش _START_ تا _END_ از _TOTAL_ رکورد",
-            "sInfoEmpty": "نمایش 0 تا 0 از 0 رکورد",
-            "sInfoFiltered": "(فیلتر شده از _MAX_ رکورد)",
-            "sInfoPostFix": "",
-            "sInfoThousands": ".",
-            "sLengthMenu": "نمایش _MENU_ رکورد",
-            "sLoadingRecords": "در حال بارگزاری...",
-            "sProcessing": "در حال پردازش...",
-            "sSearch": "جستجو",
-            "sZeroRecords": "رکوردی با این مشخصات پیدا نشد",
-            "oPaginate": {
-                "sFirst": "Erste",
-                "sPrevious": "قبلی",
-                "sNext": "بعدی",
-                "sLast": "Letzte"
-            },
-            "oAria": {
-                "sSortAscending": ": فعال سازی نمایش به صورت صعودی",
-                "sSortDescending": ": فعال سازی نمایش به صورت نزولی"
-            }
-        }
-        ,
-        columnDefs: [
-            {type: 'string', targets: 0}
-        ],
-        ajax: {
-            url: '{{route('LBDM.GetBasicDataValue')}}',
-            type: 'post',
-            data: {
-                "basicdata_id":{{$basic_id}}
-            }
-        },
-
-    });--}}
-   //------------------------------------------------------------------------------------------------------------------//
+    //------------------------------------------------------------------------------------------------------------------//
    $(document).off("click", '.reorder_basicdata_value');
    $(document).on('click', '.reorder_basicdata_value', function () {
        var $this = $(this);
@@ -143,19 +103,17 @@
                         });
                     }
                 }
-
             }
         });
-
     });
 
     $(document).off('click', '.basicdata_value_edit');
     $(document).on('click', '.basicdata_value_edit', function () {
 
         if ($("#tab_edit_basic_value").length == 0) {
-            $("#nav_tabs_value").append('<li class="nav-item" id="tab_edit_basic_value">' +
+            $("#nav_tabs_value").append('<li class="nav-item" style="position: relative;" id="tab_edit_basic_value">' +
                 '<a class="nav-link active show" data-toggle="tab" href="#edit_basicdata_value" > ' +
-                '<span>ویرایش:</span><span id="span_title">' + $(this).attr('data-title') + '</span>' +
+                '<span>ویرایش:</span><span id="span_title">' + $(this).attr('data-title') + '</span><span class="fa fa-times delete_tab_ico"></span>' +
                 '</a>' +
                 '</li>');
         }
@@ -176,93 +134,26 @@
 
     });
 
-/*    $(document).off('click', '#submit_insert_basicdata_value');
-    $(document).on('click', '#submit_insert_basicdata_value', function () {
-        var formElement = document.querySelector('#FormInsertBasicDataValue');
-        var formData = new FormData(formElement);
-        $('#FormInsertBasicDataValue  .error_msg').html('');
-        $("#FormInsertBasicDataValue  .input_with_validation_error").removeClass("input_with_validation_error");
-        insert_basicdata_value(formData);
-    });*/
+   $(document).off('click', '.delete_tab_ico');
+   $(document).on('click', '.delete_tab_ico', function () {
+       $(this).parent().parent().remove();
+       $("#tab_list_basicdata_value a").click();
 
-    $(document).off('click', '#submit_update_basicdata_value');
-    $(document).on('click', '#submit_update_basicdata_value', function () {
-        var formElement = document.querySelector('#FormUpdateBasicDataValue');
-        var formData = new FormData(formElement);
-        $('#FormUpdateBasicDataValue  .error_msg').html('');
-        $("#FormUpdateBasicDataValue  .input_with_validation_error").removeClass("input_with_validation_error");
-        update_basicdata_value(formData);
-    });
-    function update_basicdata_value(FormData) {
-        $.ajax({
-            type: "POST",
-            url: "{{route('LBDM.UpdateBasicDataValue')}}",
-            data: FormData,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                if (data.success == true) {
-                    window.datatable_basicdata_value.ajax.reload();
-                    $("#tab_list_basicdata_value a").click();
-                    $("#tab_edit_basic_value").remove();
-                    $("#FormUpdateBasicDataValue .message").html('ویرایش با موفقیت انجام شد');
-                    setTimeout(function () {
-                        $("#FormUpdateBasicDataValue .messsage").html('')
-                    }, 3000);
-                }
-                else {
-                    $.each(data.error, function (key, err) {
-                        var input_name = err.e_key;
-                        $("#update_basicdata_form_id input[name= " + input_name + " ]").addClass('input_with_validation_error');
-                        $.each(err.e_values, function (key, value) {
-                            $('#update_basicdata_form_id #error_msg_' + input_name).html(value.e_text);
-                        });
-                    });
-                }
-            },
-            error: function (e) {
-            }
-        });
-    }
+   });
 
-   {{--function insert_basicdata_value(FormData) {
-        $.ajax({
-            type: "POST",
-            url: "{{route('LBDM.InsertBasicDataValue')}}",
-            data: FormData,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                if (data.success == true) {
-                    window.datatable_basicdata_value.ajax.reload();
-                    $("#tab_list a").click();
-                    $("#tab_edit_basic").remove();
-                    $("#FormInsertBasicDataValue").find("input[type=text], textarea").val("");
-                    $("#FormInsertBasicDataValue .messsage").html('ثبت با موفقیت انجام شد');
-                    setTimeout(function () {
-                        $("#FormInsertBasicDataValue .messsage").html('')
-                    }, 3000);
-                }
-                else {
-                    $.each(data.error, function (key, err) {
-                        var input_name = err.e_key;
-                        $("#FormInsertBasicDataValue input[name= " + input_name + " ]").addClass('input_with_validation_error');
-                        $.each(err.e_values, function (key, value) {
-                            $('#FormInsertBasicDataValue #error_msg_' + input_name).html(value.e_text);
-                        });
-                    });
-                }
-            },
-            error: function (e) {
-            }
-        });
-    } --}}
    var constraints = {
-    /*       title: {
+          title: {
                presence: {message: '^<strong>عنوان الزامیست</strong>'}
-           }*/
+           },
+           dev_title: {
+               presence: {message: '^<strong> عنوان مورد استفاده الزامیست</strong>'}
+           },
+           dev_val: {
+               presence: {message: '^<strong>مقدار ثابت الزامیست</strong>'}
+           },
+           is_active: {
+               presence: {message: '^<strong>انتخاب وضعیت الزامیست</strong>'}
+           }
    };
    var form = document.querySelector("#FormInsertBasicDataValue");
    init_validatejs(form, constraints, showSuccessInsert,'#FormInsertBasicDataValue');
@@ -271,7 +162,7 @@
        var formData = new FormData(formElement);
        $.ajax({
            type: "POST",
-           url: '{{ route('backend.hotel_insert')}}',
+           url: '{{ route('LBDM.InsertBasicDataValue')}}',
            dataType: "json",
            data: formData,
            processData: false,
@@ -281,7 +172,8 @@
                    $("#FormInsertBasicDataValue .total_loader").remove();
                    $("#FormInsertBasicDataValue").find('input:text, input:password, input:file,textarea').val('');
                    $("#FormInsertBasicDataValue").find('select').val('0');
-
+                   datatable_basicdata_value.ajax.reload();
+                   $("#tab_list_basicdata_value a").click();
 
                }
                else {
