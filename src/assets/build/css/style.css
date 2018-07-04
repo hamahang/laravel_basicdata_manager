@@ -21,7 +21,7 @@
     display: none;
 }
 .delete_tab_ico{
-    color: #ec0606;
+    color: #c5bebe;
     position: absolute;
     left: 3px;
     top: 3px;
@@ -33,5 +33,9 @@
 }
 .filter_icon
 {
-    font-size: 18px; color: rgb(82, 82, 82); margin-top: 20px; cursor: pointer;
+    font-size: 18px;
+    color: rgb(82, 82, 82);
+    margin-top: 20px;
+    cursor: pointer;
+
 }

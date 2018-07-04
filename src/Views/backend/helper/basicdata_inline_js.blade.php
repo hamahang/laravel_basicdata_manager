@@ -58,7 +58,7 @@
                 return '' +
                     '<button type="button" class="btn btn-danger btn-xs btn-operation basic_data_delete fa fa-times" title="حذف" data-id="' + full.id + '"></button>' + '' +
                     '<button type="button" class="btn btn-warning btn-xs btn-operation basic_data_edit fas fa-edit mr-3 color-white" title="ویرایش" data-title="' + full.title + '" data-id="' + full.id + '"></button>' +
-                    '<button title="زیرمجموعه ها" class="btn btn-action jsPanels fas fa-clipboard-list mr-3" data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
+                    '<button title="زیرمجموعه ها" class="btn btn-action jsPanels fas fa-th-list mr-3" data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
             }
         }
 
@@ -77,7 +77,7 @@
                 return '' +
                     '<button type="button" class="btn btn-danger btn-xs btn-operation basic_data_delete  fa fa-times" title="حذف" data-id="' + full.id + '"></button>' + '' +
                     '<button type="button" class="btn btn-warning btn-xs btn-operation fas fa-edit color-white" title="ویرایش" data-title="' + full.title + '" data-id="' + full.id + '"></button>' +
-                    '<button title="زیرمجموعه ها" class="btn btn-primary btn-xs btn-operation jsPanels fas fa-clipboard-list " data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
+                    '<button title="زیرمجموعه ها" class="btn btn-primary btn-xs btn-operation jsPanels fas fa-th-list " data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
             }
         }
 
@@ -242,7 +242,6 @@
     $('#parent_id').append(newOption).trigger('change');
 
     $(document).on('click', '#btn_filter_basicdata', function () {
-
         var filter_id = $("#select_parent option:selected").val() ? $("#select_parent option:selected").val() : 0;
         if (filter_id) {
             dataTablesGrid('#basicdata_table', 'datatable_basicdata', ajax_url, columns_filter, {filter_id: filter_id});
@@ -251,9 +250,7 @@
             dataTablesGrid('#basicdata_table', 'datatable_basicdata', ajax_url, columns);
         }
     });
-    $(document).on('click', '#btn_filter_basicdata_cancel', function () {
-      dataTablesGrid('#basicdata_table', 'datatable_basicdata', ajax_url, columns);
-    });
+
 
 </script>
  --}}
@@ -308,8 +305,8 @@
             mRender: function (data, type, full) {
                 return '' +
                     '<button type="button" class="btn btn-danger btn-xs btn-operation basic_data_delete fa fa-times" title="حذف" data-id="' + full.id + '"></button>' + '' +
-                    '<button type="button" class="btn btn-warning btn-xs btn-operation basic_data_edit fas fa-edit mr-3 color-white" title="ویرایش" data-title="' + full.title + '" data-id="' + full.id + '"></button>' +
-                    '<button title="زیرمجموعه ها" class="btn btn-action jsPanels fas fa-clipboard-list mr-3" data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
+                    '<button type="button" class="btn btn-warning btn-xs btn-operation basic_data_edit fas fa-edit  color-white" title="ویرایش" data-title="' + full.title + '" data-id="' + full.id + '"></button>' +
+                    '<button title="زیرمجموعه ها" class="btn btn-primary btn-xs btn-operation jsPanels fas fa-th-list" data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
             }
         }
 
@@ -328,10 +325,9 @@
                 return '' +
                     '<button type="button" class="btn btn-danger btn-xs btn-operation basic_data_delete  fa fa-times" title="حذف" data-id="' + full.id + '"></button>' + '' +
                     '<button type="button" class="btn btn-warning btn-xs btn-operation fas fa-edit color-white basic_data_edit" title="ویرایش" data-title="' + full.title + '" data-id="' + full.id + '"></button>' +
-                    '<button title="زیرمجموعه ها" class="btn btn-primary btn-xs btn-operation jsPanels fas fa-clipboard-list " data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
+                    '<button title="زیرمجموعه ها" class="btn btn-primary btn-xs btn-operation jsPanels fas fa-th-list" data-href="{{route('LBDM.JSBasicDataValue')}}?basicdata_id=' + full.id + '"></button>';
             }
         }
-
     ];
     var ajax_url = '{!! route('LBDM.GetBasicData') !!}';
     dataTablesGrid('#basicdata_table', 'datatable_basicdata', ajax_url, columns);
@@ -385,7 +381,7 @@
             $("#nav_tabs").append('<li class="nav-item" id="tab_edit_basic" style="position: relative">' +
                 '<a class="nav-link active show" data-toggle="tab" href="#edit" > ' +
                 '<span>ویرایش:</span><span id="span_title">' + $(this).attr('data-title') + '</span>' +
-                '<span class="fa fa-times delete_tab_ico"></span> '+
+                '<span class="fa fa-times delete_tab_ico"></span> ' +
                 '</a>' +
                 '</li>');
         }
@@ -418,7 +414,7 @@
         }
     };
     var form = document.querySelector("#FormInsertBasicData");
-    init_validatejs(form, constraints, showSuccessInsert,'#FormInsertBasicData');
+    init_validatejs(form, constraints, showSuccessInsert, '#FormInsertBasicData');
     function showSuccessInsert(formElement) {
         var formData = new FormData(formElement);
         $.ajax({
@@ -445,6 +441,59 @@
         });
     }
 
+    var constraints_filter = {
+        filter_id: {
+            presence: {message: '^<strong>عنوان الزامیست</strong>'}
+        }
+    };
+    var form = document.querySelector("#FormFilter");
+    init_validatejs(form, constraints_filter, showSuccessFilter, '#FormFilter');
+    function showSuccessFilter(formElement) {
+        var formData = new FormData(formElement);
+        var filter_id = $("#select_parent option:selected").val() ? $("#select_parent option:selected").val() : 0;
+        datatable_basicdata.destroy();
+        if (filter_id) {
+            dataTablesGrid('#basicdata_table', 'datatable_basicdata', ajax_url, columns_filter, {filter_id: filter_id});
+        }
+        $("#FormFilter .total_loader").remove();
+    }
+
     init_select2_ajax('#parent_id', '{{route('LBDM.AutoCompleteBasicdat')}}', false, false, true, 'جستجو کنید ...');
+    init_select2_ajax('#select_parent', '{{route('LBDM.AutoCompleteBasicdat')}}', 'جستجو کنید ...');
+
+    $(document).on('click', '#btn_filter_basicdata_cancel', function () {
+        datatable_basicdata.destroy();
+        $("#basicdata_table thead").remove();
+        $("#basicdata_table tbody").remove();
+        dataTablesGrid('#basicdata_table', 'datatable_basicdata', ajax_url, columns);
+        $("#select_parent").val('').trigger('change')
+    });
+
+    //// reorder for basicdata datatable
+    $(document).off("click", '.reorder_basicdata');
+    $(document).on('click', '.reorder_basicdata', function () {
+        var $this = $(this);
+        var order_type = $this.data('order_type');
+        var id = $this.data('id');
+        var parent_id = $this.data('parent_id');
+        reOrderBasicData(id, parent_id, order_type);
+    });
+
+    function reOrderBasicData(id, parent_id, order_type) {
+        var result = false;
+        $.ajax({
+            type: "POST",
+            url: '{{ route('LBDM.SaveOrderBasicdata')}}',
+            dataType: "json",
+            data: {id: id, parent_id: parent_id, order_type: order_type},
+            success: function (data) {
+                if (data.success == true) {
+                    datatable_basicdata.ajax.reload();
+                    result = true;
+                }
+            }
+        });
+        return result;
+    }
 
 </script>

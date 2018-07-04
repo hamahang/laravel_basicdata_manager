@@ -30,20 +30,23 @@
                                 <div class="tab-content font-12">
                                     <div id="list" class="tab-pane active show">
                                         <div class="text-left">
-                                            <span class="fas fa-filter filter_icon" id="basic_data_filter_icon" ></span>
+                                            <span class="fas fa-filter filter_icon" id="basic_data_filter_icon"></span>
                                         </div>
                                         <div id="div_base_filter_basicdata" class="container">
-                                            <form id="FormFilter">
-                                                <div class="form-group col-12 row">
-                                                    <label class="col-sm-1 text-center">
-                                                        <span class="red-star"></span><span>والد:</span>
+                                            <form id="FormFilter" class="form-horizontal col-12 relative">
+                                                <div class="form-group col-12 row fg_filter_id">
+                                                    <label class="col-sm-1 text-center control-label label_dev_comment" for="select_parent">
+                                                        <span class="more_info"></span>
+                                                        <span class="red-star"></span>
+                                                        <span>والد:</span>
                                                     </label>
                                                     <div class="col-sm-5 text-right">
                                                         <select class="form-control" name="filter_id" id="select_parent"></select>
+                                                        <div class="col-sm-12 messages"></div>
                                                     </div>
                                                     <div class="col-sm-5">
-                                                        <button type="button" id="btn_filter_basicdata" class="btn btn-success btn-md">اعمال</button>
-                                                        <button type="button" id="btn_filter_basicdata_cancel" class="btn btn-default btn-md">لغو فیلتر</button>
+                                                        <button type="submit" name="submit" id="btn_filter_basicdata" class="btn btn-success btn-sm">اعمال</button>
+                                                        <button type="button" id="btn_filter_basicdata_cancel" class="btn btn-default btn-sm">لغو فیلتر</button>
                                                     </div>
                                                 </div>
                                                 <div class="hr"></div>

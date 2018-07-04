@@ -2,7 +2,7 @@
 <script>
 
    /* var datatable_basicdata_value;*/
-    var columns=[
+    var columns_basicdata_value=[
         {data: 'title', name: 'title', title: 'عنوان',width:'20%'},
         {data: 'dev_title', name: 'dev_title', title: 'عنوان مورد استفاده',width:'20%'} ,
         {data: 'comment', name: 'comment', title: 'توضیحات',width:'20%'},
@@ -54,8 +54,8 @@
             }
         }
     ];
-    var ajax_url='{{route('LBDM.GetBasicDataValue')}}';
-    dataTablesGrid('#basicdata_value_table', 'datatable_basicdata_value', ajax_url, columns,{basicdata_id:{{$basic_id}}});
+    var ajax_url_basicdata_value='{{route('LBDM.GetBasicDataValue')}}';
+    dataTablesGrid('#basicdata_value_table', 'datatable_basicdata_value', ajax_url_basicdata_value, columns_basicdata_value,{basicdata_id:{{$basic_id}}});
     //------------------------------------------------------------------------------------------------------------------//
    $(document).off("click", '.reorder_basicdata_value');
    $(document).on('click', '.reorder_basicdata_value', function () {
