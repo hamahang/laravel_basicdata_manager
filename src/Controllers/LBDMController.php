@@ -92,7 +92,7 @@ class LBDMController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'parent_id'=>'required|exists_or_zero:BasicData',
+                'parent_id'=>'exists_or_zero:BasicData',
                 'title' => 'required|string',
                 'dev_title' => 'required|string',
                 'is_active' => 'required|integer:0,1',
@@ -100,17 +100,16 @@ class LBDMController extends Controller
                 'dev_comment' => 'nullable|string',
                 'extra_field' => 'nullable|string',
             ],[
-                'parent_id.required'=>'',
-                'parent_id.exists_or_zero'=>'',
-                'title.required'=>'',
-                'title.string'=>'',
-                'dev_title.required'=>'',
-                'dev_title.string'=>'',
-                'is_active.required'=>'',
-                'is_active.integer'=>'',
-                'comment.string'=>'',
-                'dev_comment.string'=>'',
-                'extra_field.string'=>'',
+                'parent_id.exists_or_zero'=>'والد انتخابی نامعتبر است',
+                'title.required'=>'عنوان الزامی است',
+                'title.string'=>'عنوان نامعتبر است',
+                'dev_title.required'=>'عنوان مورد استفاده الزامی است',
+                'dev_title.string'=>'عنوان مورد استفاده نامعتبر است',
+                'is_active.required'=>'انتخاب وضعیت الزامی است',
+                'is_active.integer'=>'وضعیت انتخاب نامعتبر است',
+                'comment.string'=>'توضیحات نامعتبر است',
+                'dev_comment.string'=>'توضیحات مورد استفاده نامعتبر است',
+                'extra_field.string'=>'داده های بیشتر نامعتبر است',
             ]
         );
         if ($validator->fails()) {

@@ -35,7 +35,7 @@ class LBDMServiceProvider extends ServiceProvider
 
         Validator::extend('exists_or_zero', function ($attribute, $value, $parameters) {
            /* dd($attribute, $value, $parameters);*/
-            if($value==0) return true;
+            if($value==0 || !$value) return true;
             else
             {
              $basic_data=\ArtinCMS\LBDM\Models\BasicData::find($value);

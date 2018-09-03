@@ -11,11 +11,7 @@
 @section('content')
     <section>
         <div class="container-fluid">
-            <div class="row">
-                <div class=" col-lg-3">
-                    <div id="jstree_basic"></div>
-                </div>
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="row">
                         <div class="col-12">
                             <div class="container">
@@ -154,7 +150,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </section>
 @stop
