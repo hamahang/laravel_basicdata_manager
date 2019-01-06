@@ -106,4 +106,14 @@ if (!function_exists('LBDM_Date_JtoG'))
 
 }
 
+
+if (!function_exists('LBDM_CreateBackendBasicDataManagerView'))
+{
+    function LBDM_CreateBackendBasicDataManagerView()
+    {
+        $src = route('LBDM.index');
+        $html = '<iframe style="width:100%;height: calc(100vh - 51px);    max-height: calc(100vh - 50px);    border: none;" id="iframShowBasicManager" src="' . $src . '"></iframe>';
+        return $html;
+    }
+}
 ?>
