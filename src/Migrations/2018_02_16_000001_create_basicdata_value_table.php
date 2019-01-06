@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 class CreateBasicdataValueTable extends Migration
 {
 
-    private $table = 'basicdata_values';
+    private $table = 'lbdm_basicdata_values';
 
     /**
      * Run the migrations.
@@ -18,7 +18,7 @@ class CreateBasicdataValueTable extends Migration
         Schema::create($this->table, function(Blueprint $table)
         {
             $table->increments('id')->unsigned();
-            $table->integer('basicdata_id')->nullable()->default(null)->unsigned();
+            $table->integer('basicdata_id')->nullable()->default(0)->unsigned();
             $table->string('title',255)->nullable()->default(null);
             $table->string('dev_title',255)->nullable()->default(null);
             $table->text('value')->nullable()->default(null);
@@ -28,7 +28,7 @@ class CreateBasicdataValueTable extends Migration
             $table->string('extra_field',255)->nullable()->default(null);
             $table->string('dev_comment',255)->nullable()->default(null);
             $table->integer('order')->nullable()->default(null);
-            $table->enum('is_active',['0','1'])->default('1');
+            $table->enum('is_active',['0','1'])->nullable()->default('1');
             $table->integer('created_by')->nullable()->default(null)->unsigned();
             $table->timestamps();
             $table->softDeletes();

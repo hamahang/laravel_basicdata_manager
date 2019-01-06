@@ -2,518 +2,366 @@
 
 namespace ArtinCMS\LBDM\Controllers;
 
-use ArtinCMS\LBDM\Models\BasicData;
-use ArtinCMS\LBDM\Models\BasicDataValue;
-use App\Http\Controllers\Controller;
-use DataTables;
-use Illuminate\Support\Facades\View;
 use Validator;
+use DataTables;
 use Illuminate\Http\Request;
+use ArtinCMS\LBDM\Models\BasicData;
+use App\Http\Controllers\Controller;
+use ArtinCMS\LBDM\Models\BasicDataValue;
+use ArtinCMS\LBDM\Requests\EditBasicData_Request;
+use ArtinCMS\LBDM\Requests\DeleteBasicData_Request;
+use ArtinCMS\LBDM\Requests\CreateBasicData_Request;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use ArtinCMS\LBDM\Requests\GetBasicDataValues_Request;
+use ArtinCMS\LBDM\Requests\EditBasicDataValue_Request;
+use ArtinCMS\LBDM\Requests\CreateBasicDataValue_Request;
+use ArtinCMS\LBDM\Requests\DeleteBasicDataValue_Request;
+use ArtinCMS\LBDM\Requests\LoadBasicDataEditForm_Request;
+use ArtinCMS\LBDM\Requests\LoadBasicDataValueEditForm_Request;
 
 class LBDMController extends Controller
 {
-    private function reOrderBasicdata($filter_id)
+    private function reOrderBasicDataValueItem($basicdata_id)
     {
-        $all_basicdata = BasicData::where('parent_id',$filter_id)->orderBy('order', 'asc')->get();
+        $all_BasicDataValueItems = BasicdataValue::where('basicdata_id', $basicdata_id)->orderBy('order', 'asc')->get();
         $i = 1;
-        foreach ($all_basicdata as $basicdata)
+        foreach ($all_BasicDataValueItems as $item)
         {
-            $basicdata->order = $i++;
-            $basicdata->save();
-        }
-        return $i;
-    }
-    private function reOrderBasicdataValue($basicdata_id)
-    {
-        $all_work_group_item_more_services = BasicDataValue::where('basicdata_id', $basicdata_id)->orderBy('order', 'asc')->get();
-        $i = 1;
-        foreach ($all_work_group_item_more_services as $work_group_item_more_service)
-        {
-            $work_group_item_more_service->order = $i++;
-            $work_group_item_more_service->save();
+            $item->order = $i++;
+            $item->save();
         }
         return $i;
     }
 
-    public function index_basicdata_value()
+    private function reOrderBasicDataItem($parent_id)
     {
-        return view('LBDM::backend.helper.index_basicdata_value');
+        $all_BasicDataItems = Basicdata::where('parent_id', $parent_id)->orderBy('order', 'asc')->get();
+        $i = 1;
+        foreach ($all_BasicDataItems as $item)
+        {
+            $item->order = $i++;
+            $item->save();
+        }
+        return $i;
     }
 
     public function index()
     {
-        $basic_data=BasicData::with('Items')->get();
-        return view('LBDM::backend.index')->with('basicdata',$basic_data);
-
+        $basicData = Basicdata::all();
+        return view('laravel_basicdata_manager::backend.basic_data_index', compact('basicData'));
     }
 
-    public function list_basicdata(Request $request)
+    public function getBasicData(Request $request)
     {
-        if(isset($request->filter_id)&& $request->filter_id)
+        if ($request->item_id)
         {
-            return datatables()->eloquent(
-                BasicData::with('Items')
-                    ->where('parent_id',$request->filter_id))
-                ->addColumn('count_basic', function ($data) {
-                    return $data->items->count();
-                })->make(true);
+            $basic_data = Basicdata::where('parent_id', $request->item_id);
         }
-        else{
-            return datatables()->eloquent(BasicData::with('Items'))
-                ->addColumn('count_basic', function ($data) {
-                    return $data->items->count();
-                })->make(true);
+        else
+        {
+            $basic_data = Basicdata::query();
         }
+        return Datatables::eloquent($basic_data)
+            ->editColumn('id', function ($data) {
+                return LBDM_EnCodeId($data->id);
+            })
+            ->editColumn('short_comment', function ($data) {
+                return substr($data->comment, 0, 70) . '...';
+            })
+            ->addColumn('created_at_jalali', function ($data) {
+                return $data->created_at_jalali;
+            })
+            ->addColumn('base_item', function ($data) {
+                return $data->id;
+            })
+            ->addColumn('main_id', function ($data) {
+                return $data->id;
+            })
+            ->make(true);
+    }
+
+    public function getBasicDataValue(GetBasicDataValues_Request $request)
+    {
+        $basic_data = BasicdataValue::where('basicdata_id', LBDM_DeCodeId($request->basic_data_id));
+        return Datatables::eloquent($basic_data)
+            ->editColumn('id', function ($data) {
+                return LBDM_EnCodeId($data->id);
+            })
+            ->addColumn('created_at_jalali', function ($data) {
+                return $data->created_at_jalali;
+            })
+            ->addColumn('main_id', function ($data) {
+                return $data->id;
+            })
+            ->make(true);
 
     }
 
-    public function list_basicdata_value(Request $request)
+    public function createBasicData(CreateBasicData_Request $request)
     {
-      $validator = Validator::make(
-           $request->all(),
-           [
-               'basicdata_id' => 'required|exists:basicdata,id',
-           ]
-       );
-       if ($validator->fails()) {
-           $res =
-               [
-                   'success' => false,
-                   'error' => $validator->errors()
-               ];
-           return json_encode($res);
-       } else {
-        return datatables()->eloquent(BasicDataValue::where('basicdata_id',$request->basicdata_id))->make(true);
-        }
-    }
+        $basic_data = new Basicdata();
+        $basic_data->parent_id = $request->parent_id ? $request->parent_id : 0;
+        $basic_data->title = $request->title;
+        $basic_data->comment = $request->comment;
+        $basic_data->created_by = auth()->id();
+        $basic_data->save();
 
-    public function insert_basicdata(Request $request)
-    {
-        $validator = Validator::make(
-            $request->all(),
+        $res =
             [
-                'parent_id'=>'exists_or_zero:BasicData',
-                'title' => 'required|string',
-                'dev_title' => 'required|string',
-                'is_active' => 'required|integer:0,1',
-                'comment' => 'nullable|string',
-                'dev_comment' => 'nullable|string',
-                'extra_field' => 'nullable|string',
-            ],[
-                'parent_id.exists_or_zero'=>'والد انتخابی نامعتبر است',
-                'title.required'=>'عنوان الزامی است',
-                'title.string'=>'عنوان نامعتبر است',
-                'dev_title.required'=>'عنوان مورد استفاده الزامی است',
-                'dev_title.string'=>'عنوان مورد استفاده نامعتبر است',
-                'is_active.required'=>'انتخاب وضعیت الزامی است',
-                'is_active.integer'=>'وضعیت انتخاب نامعتبر است',
-                'comment.string'=>'توضیحات نامعتبر است',
-                'dev_comment.string'=>'توضیحات مورد استفاده نامعتبر است',
-                'extra_field.string'=>'داده های بیشتر نامعتبر است',
-            ]
+                'success' => true,
+                'status_type' => "success",
+                'title' => 'افزودن داده اولیه .',
+                'message' => 'داده اولیه با موفقیت افزوده شد.'
+            ];
+
+
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
         );
-        if ($validator->fails()) {
-             $error = validation_error_to_api_json($validator->errors());
-            $res =
-                [
-                    'success' => false,
-                    'error' => $validator->errors()
-                ];
-            return json_encode($res);
-        } else {
-            $basic = new BasicData();
-            $basic->title = $request->title;
-            $basic->dev_title = $request->dev_title;
-            $basic->is_active = $request->is_active;
-            $basic->comment = $request->comment;
-            $basic->dev_comment = $request->dev_comment;
-            $basic->parent_id = $request->parent_id;
-            $basic->extra_field = $request->extra_field;
-            $basic->save();
-            $res['success'] = true;
-            $res['message'] =
-                [
-                    [
-                        'title' => 'ثبت با موفقیت انجام شد'
-                    ]
-                ];
-            return json_encode($res);
-        }
     }
 
-    public function delete_basicdata(Request $request)
+    public function createBasicDataValue(CreateBasicDataValue_Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
+        $basic_data_value = new BasicdataValue();
+        $basicdata_id = LBDM_DeCodeId($request->basicdata_id_hidden) ;
+        $basic_data_value->basicdata_id = $basicdata_id;
+        $basic_data_value->title = $request->title;
+        $basic_data_value->value = $request->value;
+        $basic_data_value->comment = $request->comment;
+        $basic_data_value->created_by = auth()->id();
+        $basic_data_value->save();
+
+        $res =
             [
-                'id' => 'required|exists:basicdata,id',
-            ]
-        );
-        if ($validator->fails()) {
-            /* $error = validation_error_to_api_json($validator->errors());*/
-            $res =
-                [
-                    'success' => false,
-                    'error' => $validator->errors()
-                ];
-            return json_encode($res);
-        } else {
-            $basic = BasicData::find($request->id);
-            $basic->delete();
-            $result['message'] = 'عملیات حذف با موفقیت انجام شد';
-            $result['success'] = true;
-            return json_encode($result);
-        }
+                'success' => true,
+                'status_type' => "success",
+                'message' => 'مقدار داده اولیه با موفقیت افزوده شد.'
+            ];
 
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
+        );
     }
 
-    public function update_basicdata(Request $request)
+    public function editBasicData(EditBasicData_Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
+        $basic_data = Basicdata::find(LBDM_DeCodeId($request->item_id));
+        $basic_data->parent_id = $request->parent_id ? $request->parent_id : 0;
+        $basic_data->title = $request->title;
+        $basic_data->comment = $request->comment;
+        $basic_data->created_by = auth()->id();
+        $basic_data->save();
+
+        $res =
             [
-                'id' => 'required|exists:basicdata,id',
-                'title' => 'required|string',
-                'dev_title' => 'required|string',
-                'is_active' => 'required|integer:0,1',
-                'comment' => 'string',
-            ]
+                'success' => true,
+                'status_type' => "success",
+                'message' => 'داده اولیه با موفقیت ویرایش شد.'
+            ];
+
+
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
         );
-        if ($validator->fails()) {
-            /* $error = validation_error_to_api_json($validator->errors());*/
-            $res =
-                [
-                    'success' => false,
-                    'error' => $validator->errors()
-                ];
-            return json_encode($res);
-        } else {
-            $basic = BasicData::find($request->id);
-            $basic->title = $request->title;
-            $basic->dev_title = $request->dev_title;
-            $basic->is_active = $request->is_active;
-            $basic->comment = $request->comment;
-            $basic->dev_comment = $request->dev_comment;
-            $basic->dev_comment = $request->dev_comment;
-            $basic->created_by = $request->created_by;
-            $basic->parent_id = $request->parent_id;
-            $basic->extra_field = $request->extra_field;
-            $basic->save();
-            $result['message'] = 'عملیات ویرایش با موفقیت انجام شد';
-            $result['success'] = true;
-            return json_encode($result);
-        }
     }
 
-    public function insert_basicdata_value(Request $request)
+    public function deleteBasicData(DeleteBasicData_Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
+        $basic_data = Basicdata::find(LBDM_DeCodeId($request->basic_data_id));
+        $basic_data->delete();
+
+        $res =
             [
-                'basicdata_id' => 'required|exists:basicdata,id',
-                'title' => 'required|max:255',
-                'dev_title' => 'nullable|string',
-                'is_active' => 'required|integer:0,1',
-            ]
+                'success' => true,
+                'status_type' => "success",
+                'message' => 'داده اولیه با موفقیت حذف گردید.'
+            ];
+
+
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
         );
-        if ($validator->fails()) {
-            /*$error = validation_error_to_api_json($validator->errors());*/
-            $res =
-                [
-                    'success' => false,
-                    'error' => $validator->errors()
-                ];
-            return json_encode($res);
-        } else {
-            $basic_value = new BasicDataValue();
-            $basic_value->basicdata_id = $request->basicdata_id;
-            $basic_value->title = $request->title;
-            $basic_value->dev_title = $request->dev_title;
-            $basic_value->extra_field = $request->extra_field;
-            $basic_value->is_active = $request->is_active;
-            $basic_value->value = $request->dev_val;
-            $basic_value->save();
-            $result['message'] = 'عملیات ثبت با موفقیت انجام شد';
-            $result['success'] = true;
-            return json_encode($result);
-        }
     }
 
-    public function delete_basicdata_value(Request $request)
+    public function deleteBasicDataValue(DeleteBasicDataValue_Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
+        $basic_data_value = BasicdataValue::find(LBDM_DeCodeId($request->basic_data_value_id));
+        $basic_data_value->delete();
+
+        $res =
             [
-                'id' => 'required|exists:basicdata_values,id',
-            ]
+                'success' => true,
+                'status_type' => "success",
+                'message' => 'مقدار داده اولیه با موفقیت حذف گردید.'
+            ];
+
+
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
         );
-        if ($validator->fails()) {
-            /*$error = validation_error_to_api_json($validator->errors());*/
-            $res =
-                [
-                    'success' => false,
-                    'error' => $validator->errors()
-                ];
-            return json_encode($res);
-        } else {
-            $basic_value = BasicDataValue::find($request->id);
-            $basic_value->delete();
-            $result['message'] = 'عملیات حذف با موفقیت انجام شد';
-            $result['success'] = true;
-            return json_encode($result);
-        }
     }
 
-    public function update_basicdata_value(Request $request)
+    public function editBasicDataValue(EditBasicDataValue_Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
+        $basic_data = BasicdataValue::find(LBDM_DeCodeId($request->item_id));
+        $basic_data->basicdata_id = $request->basicdata_id;
+        $basic_data->title = $request->title;
+        $basic_data->value = $request->value;
+        $basic_data->comment = $request->comment;
+        $basic_data->created_by = auth()->id();
+        $basic_data->save();
+
+        $res =
             [
-                'id' => 'required|exists:basicdata_values,id',
-                'basicdata_id' => 'required|exists:basicdata,id',
-                'title' => 'required|string',
-                'dev_title' => 'nullable|string',
-                'is_active' => 'required|integer:0,1',
-            ]
+                'success' => true,
+                'status_type' => "success",
+                'message' => 'مقدار داده اولیه با موفقیت ویرایش شد.'
+            ];
+
+
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
         );
-        if ($validator->fails()) {
-            $res =
-                [
-                    'success' => false,
-                    'error' => $validator->errors()
-                ];
-            return json_encode($res);
-        } else {
-            $basic_value = BasicDataValue::find($request->id);
-            $basic_value->basicdata_id = $request->basicdata_id;
-            $basic_value->title = $request->title;
-            $basic_value->dev_title = $request->dev_title;
-            $basic_value->extra_field = $request->extra_field;
-            $basic_value->value = $request->dev_val;
-            $basic_value->comment = $request->comment;
-            $basic_value->is_active = $request->is_active;
-            $basic_value->save();
-            $result['message'] = 'عملیات ویرایش با موفقیت انجام شد';
-            $result['success'] = true;
-            return json_encode($result);
-        }
     }
 
-    public function JSBasicDataValue(Request $request)
+    public function getBasicDataEditForm(LoadBasicDataEditForm_Request $request)
     {
-        $basicdata=BasicData::orderBy('id','ASC');
-        $basic_middel=$basicdata->get();
-        $basicdata_selected=$basic_middel->where('id',$request->basicdata_id)->first();
-            $result['header'] = '<span class="pull-right">'.$basicdata_selected->title.'</span>';
-            $result['content'] = View::make('LBDM::backend.JsPanelBasicDataValue.content')
-                ->with('basic_id',$request->basicdata_id)
-                ->with('basicdata',$basicdata->get())
-                ->with('basicdata_selected',$basicdata_selected)->render();
-            $result['footer'] = View::make('LBDM::backend.JsPanelBasicDataValue.footer')->render();
-        return json_encode($result);
-    }
-
-    public function show_edit_basicdata(Request $request)
-    {
-        $validator = Validator::make(
-            $request->all(),
+        $basic_data = Basicdata::find(LBDM_DeCodeId($request->basic_data_id));
+        $basic_data_edit_view = view('laravel_basicdata_manager::backend.views.basic_data_edit_form')
+            ->with('basic_data', $basic_data)
+            ->render();
+        $res =
             [
-                'id' => 'required|exists:basicdata,id',
-            ]
+                'success' => true,
+                'status_type' => "success",
+                'edit_view' => $basic_data_edit_view
+            ];
+
+
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
         );
-        if ($validator->fails()) {
-            $result['success'] = true;
-            $result['view'] = view('LBDM::backend.helper.edit_basicdata')->render();
-        } else {
-            $basicdata = BasicData::find($request->id);
-            $basicdata_list=BasicData::where('id','<>',$basicdata->id)->get();
-
-            $result['view'] = view('LBDM::backend.helper.edit_basicdata')
-                ->with('basicdata', $basicdata)
-                ->with('basicdatas', $basicdata_list)
-                ->render();
-            $result['success'] = true;
-            return json_encode($result);
-        }
-
     }
 
-    public function show_edit_basicdata_value(Request $request)
+    public function getBasicDataValueEditForm(LoadBasicDataValueEditForm_Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
+        $basic_data_value = BasicdataValue::find(LBDM_DeCodeId($request->basic_data_value_id));
+        $basic_data_value_edit_view = view('laravel_basicdata_manager::backend.views.basic_data_value_edit_form')
+            ->with('basic_data_value', $basic_data_value)
+            ->render();
+        $res =
             [
-                'id' => 'required|exists:basicdata_values,id',
-            ]
+                'success' => true,
+                'status_type' => "success",
+                'basic_data_value_view' => $basic_data_value_edit_view
+            ];
+
+
+        throw new HttpResponseException(
+            response()
+                ->json($res, 200)
+                ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8'])
         );
-        if ($validator->fails()) {
+    }
+
+    public function saveOrderBasicDataValueItem(Request $request)
+    {
+        $item_id = LBDM_DeCodeId($request->item_id);
+        $basicdata_id = $request->basicdata_id;
+        $count = $this->reOrderBasicDataValueItem($basicdata_id);
+        $BasicdataValue = BasicdataValue::find($item_id);
+        $order = $BasicdataValue->order;
+        if ($request->order_type == 'increase')
+        {
+            $nextItem = BasicdataValue::where('basicdata_id', $basicdata_id)->where('order', '=', $order + 1)->first();
+            if ($nextItem)
+            {
+                $BasicdataValue->order = $order + 1;
+                $BasicdataValue->save();
+                //set new order
+                $nextItem->order = $order;
+                $nextItem->save();
+            }
+        }
+        elseif ($request->order_type == 'decrease')
+        {
+            $previousItem = BasicdataValue::where('basicdata_id', $basicdata_id)->where('order', '=', $order - 1)->first();
+            if ($previousItem)
+            {
+                $BasicdataValue->order = $order - 1;
+                $BasicdataValue->save();
+                //set new order
+                $previousItem->order = $order;
+                $previousItem->save();
+            }
+        }
+        else
+        {
+            $result['error'][] = "متاسفانه با مشکل مواجه شد!";
             $result['success'] = false;
-            $result['view'] = view('LBDM::backend.helper.edit_basicdata_value')->render();
-        } else {
-
-            $basicdata_value = BasicDataValue::with('parent')->find($request->id);
-            $basicdata = BasicData::get();
-            $result['view'] = view('LBDM::backend.helper.edit_basicdata_value')
-                ->with('basicdata_value', $basicdata_value)
-                ->with('basicdata', $basicdata)
-                ->render();
-            $result['success'] = true;
-            return json_encode($result);
+            return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
         }
-
+        $result['message'][] = "با موفقیت انجام شد.";
+        $result['success'] = true;
+        return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
     }
 
-    public function basic_select2(){
-        $basicdata = BasicData::select("id", 'title  AS text')->get();
-        $data = array('results' => $basicdata);
-        return json_encode($data);
-    }
-
-    public function save_order_basicdata(Request $request)
+    public function saveOrderBasicDataItem(Request $request)
     {
-        $input = $request->all();
-        $rules = [
-            'id' => 'required',
-            'parent_id' => 'required',
-            'order_type' => 'required',
-        ];
-        $messages = [
-            'id.required' => 'محدوده هزینه خدمات انتخاب نشده است.',
-            'parent_id.required' => 'زیر گروه کاری انتخاب نشده است.',
-            'order_type.required' => 'نوع تغییر مشخص نشده است. ',
-        ];
-        $validator = Validator::make($input, $rules, $messages);
-        if ($validator->fails())
+        $item_id = LBDM_DeCodeId($request->item_id);
+        $parent_id = $request->parent_id;
+        $count = $this->reOrderBasicDataItem($parent_id);
+        $Basicdata = Basicdata::find($item_id);
+        $order = $Basicdata->order;
+        if ($request->order_type == 'increase')
         {
-            $error = validation_error_to_api_json($validator->errors());
-            $res =
-                [
-                    'success' => false,
-                    'error' => $error
-                ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
+            $nextItem = Basicdata::where('parent_id', $parent_id)->where('order', '=', $order + 1)->first();
+            if ($nextItem)
+            {
+                $Basicdata->order = $order + 1;
+                $Basicdata->save();
+                //set new order
+                $nextItem->order = $order;
+                $nextItem->save();
+            }
+        }
+        elseif ($request->order_type == 'decrease')
+        {
+            $previousItem = Basicdata::where('parent_id', $parent_id)->where('order', '=', $order - 1)->first();
+            if ($previousItem)
+            {
+                $Basicdata->order = $order - 1;
+                $Basicdata->save();
+                //set new order
+                $previousItem->order = $order;
+                $previousItem->save();
+            }
         }
         else
         {
-            $count_wgims = $this->reOrderBasicdata($request->parent_id);
-            $basic_data = BasicData::find($request->id);
-            $order = $basic_data->order;
-            if ($request->order_type == 'increase')
-            {
-                $next_WGIMS = $basic_data::where('parent_id', $request->parent_id)->where('order', '=', $order + 1)->first();
-
-                if ($next_WGIMS)
-                {
-                    $basic_data->order = $order + 1;
-                    $basic_data->save();
-
-                    $next_WGIMS->order = $order;
-                    $next_WGIMS->save();
-                }
-
-            }
-            elseif ($request->order_type == 'decrease')
-            {
-                $previous_WGIMS = $basic_data::where('parent_id', $request->parent_id)->where('order', '=', $order - 1)->first();
-                if ($previous_WGIMS)
-                {
-                    $basic_data->order = $order - 1;
-                    $basic_data->save();
-
-                    $previous_WGIMS->order = $order;
-                    $previous_WGIMS->save();
-                }
-            }
-            else
-            {
-                $result['error'][] = "متاسفانه با مشکل مواجه شد!";
-                $result['success'] = false;
-                return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
-            }
-
-            $result['message'][] = "با موفقیت انجام شد.";
-            $result['success'] = true;
+            $result['error'][] = "متاسفانه با مشکل مواجه شد!";
+            $result['success'] = false;
             return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
         }
+        $result['message'][] = "با موفقیت انجام شد.";
+        $result['success'] = true;
+        return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
     }
 
-    public function save_order_basicdata_value(Request $request)
-    {
-        $input = $request->all();
-        $rules = [
-            'basicdata_id' => 'required',
-            'basicdata_value_id' => 'required',
-            'order_type' => 'required',
-        ];
-        $messages = [
-            'basicdata_id.required' => 'محدوده هزینه خدمات انتخاب نشده است.',
-            'basicdata_value_id.required' => 'زیر گروه کاری انتخاب نشده است.',
-            'order_type.required' => 'نوع تغییر مشخص نشده است. ',
-        ];
-        $validator = Validator::make($input, $rules, $messages);
-        if ($validator->fails())
-        {
-            $error = validation_error_to_api_json($validator->errors());
-            $res =
-                [
-                    'success' => false,
-                    'error' => $error
-                ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
-        }
-        else
-        {
-            $count_wgims = $this->reOrderBasicdataValue($request->basicdata_id);
-            $basicdata_value = BasicDataValue::find($request->basicdata_value_id);
-            $order = $basicdata_value->order;
-            if ($request->order_type == 'increase')
-            {
-                $next_WGIMS = BasicDataValue::where('basicdata_id', $request->basicdata_id)->where('order', '=', $order + 1)->first();
 
-                if ($next_WGIMS)
-                {
-                    $basicdata_value->order = $order + 1;
-                    $basicdata_value->save();
 
-                    $next_WGIMS->order = $order;
-                    $next_WGIMS->save();
-                }
-
-            }
-            elseif ($request->order_type == 'decrease')
-            {
-                $previous_WGIMS = BasicDataValue::where('basicdata_id', $request->basicdata_id)->where('order', '=', $order - 1)->first();
-                if ($previous_WGIMS)
-                {
-                    $basicdata_value->order = $order - 1;
-                    $basicdata_value->save();
-
-                    $previous_WGIMS->order = $order;
-                    $previous_WGIMS->save();
-                }
-            }
-            else
-            {
-                $result['error'][] = "متاسفانه با مشکل مواجه شد!";
-                $result['success'] = false;
-                return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
-            }
-
-            $result['message'][] = "با موفقیت انجام شد.";
-            $result['success'] = true;
-            return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
-        }
-    }
-
-    public function get_jstree_basicdata(){
-       $basic=BasicData::select('id','title as text','parent_id as parent')->get();
-       foreach ($basic as $basic_data)
-        {
-            if(!$basic_data->parent){
-                $basic_data->parent='#';
-            }
-        }
-
-       return json_encode($basic);
-    }
 }

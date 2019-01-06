@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 class CreateBasicdataValueablesTable extends Migration
 {
 
-    const table = 'basicdata_valueables';
+    const table = 'lbdm_basicdata_valueables';
 
     /**
      * Run the migrations.

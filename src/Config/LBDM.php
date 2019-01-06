@@ -12,4 +12,7 @@ return [
     'private_route_prefix' => env('LBDM_BACKEND_ROUTE_PREFIX', 'LBDM'),
     'public_route_prefix'  => env('LBDM_FRONTEND_ROUTE_PREFIX', 'LBDM'),
     // ======================================================================
+
+    'lbdm_get_user_model_name' => env('LBDM_GET_USER_MODEL_NAME', 'App\User'),
+
 ];

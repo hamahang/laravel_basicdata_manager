@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 class CreateBasicdataTable extends Migration
 {
 
-    private $table = 'basicdata';
+    private $table = 'lbdm_basicdata';
 
     /**
      * Run the migrations.
@@ -26,7 +26,7 @@ class CreateBasicdataTable extends Migration
             $table->integer('order')->nullable()->default(null);
             $table->string('extra_field',255)->nullable()->default(null);
             $table->integer('created_by')->nullable()->default(null)->unsigned();
-            $table->enum('is_active',['0','1'])->default('1');
+            $table->enum('is_active', array('0','1'))->nullable()->default('1');
             $table->timestamps();
             $table->softDeletes();
         });

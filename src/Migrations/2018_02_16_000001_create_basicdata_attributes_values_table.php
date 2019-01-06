@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 class CreateBasicdataAttributesValuesTable extends Migration
 {
 
-    const table = 'basicdata_attributes_values';
+    const table = 'lbdm_basicdata_attributes_values';
 
     /**
      * Run the migrations.

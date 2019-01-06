@@ -1,34 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('page_title','KaraSun - backend')</title>
+    <title>@yield('page_title','پنل مدیریت')</title>
 
-    <!-- All CSS -->
-    <link rel="stylesheet" type="text/css" href="{{asset('vendor/laravel_basicdata_manager/build/css/init_core_LBDM.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('vendor/laravel_basicdata_manager/build/css/style.css')}}">
+    <!-- global stylesheets -->
+    <link href="{{url('vendor/laravel_basicdata_manager/build/backend/css/init_core.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url('vendor/laravel_basicdata_manager/build/fonts/IranSans/style.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url('vendor/laravel_basicdata_manager/build/backend/css/init_custom_style.min.css')}}" rel="stylesheet" type="text/css">
+@yield('custom_plugin_style')
+<!-- /global stylesheets -->
 
-    <!-- Optional CSS -->
-    @yield('plugin_css')
-    @yield('inline_css')
+    <!-- Core JS files -->
+    <script src="{{asset('vendor/laravel_basicdata_manager/build/backend/js/init_core.min.js')}}"></script>
+    <!-- /core JS files -->
 
-    <!-- All JS -->
-    <script type="text/javascript" src="{{asset('vendor/laravel_basicdata_manager/build/js/init_core_LBDM.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('vendor/laravel_basicdata_manager/build/js/init_data_LBDM.min.js')}}"></script>
-
-    <!-- Optional JavaScript -->
-    @yield('plugin_js')
-    @yield('inline_js')
+    <!-- Theme JS files -->
+@yield('theme_plugin_js')
+    <script type="text/javascript" src="{{url('vendor/laravel_basicdata_manager/build/backend/js/init_plugin.min.js')}}"></script>
+@yield('custom_plugin_js')
+    <script src="{{asset('vendor/laravel_basicdata_manager/build/common/js/init_data.min.js')}}"></script>
+<!-- /theme JS files -->
+    @yield('inline_style')
+    <style>
+        div.dataTables_wrapper {
+            direction: rtl;
+        }
+    </style>
 </head>
-<body>
 
-@yield('content')
-
-<!-- Optional JavaScript -->
-@yield('footer_plugin_js')
-@yield('footer_inline_js')
-
+<body class="navbar-top">
+<!-- Page container -->
+<div class="container-fluid">
+    <!-- Page content -->
+    <!-- Content area -->
+    <div class="content">
+        <div id="form_message_box" class="form_message_area"></div>
+        <div class="row">
+            @yield('content')
+        </div>
+    </div>
+    <!-- /content area -->
+</div>
+<div id="all_modals"></div>
+@yield('inline_js')
 </body>
 </html>
