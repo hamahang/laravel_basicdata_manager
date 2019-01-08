@@ -33,7 +33,7 @@ class GetBasicDataValues_Request extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $api_errors = validation_error_to_api_json($validator->errors());
+        $api_errors = LBDM_Validation_error_to_api_json($validator->errors());
         $res =
             [
                 'status' => "-1",
