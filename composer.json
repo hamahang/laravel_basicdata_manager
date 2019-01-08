@@ -11,8 +11,7 @@
     ],
     "autoload": {
         "files": [
-            "src/Helpers/function/API.php",
-            "src/Helpers/function/System.php"
+            "src/Helpers/function/API.php"   
         ],
         "psr-4": {
             "ArtinCMS\\LBDM\\": "src"
