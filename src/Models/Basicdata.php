@@ -18,21 +18,21 @@ class Basicdata extends Model
 
     public function items()
     {
-        return $this->hasMany('App\Models\Basicdata\BasicdataValue', 'basicdata_id');
+        return $this->hasMany('ArtinCMS\LBDM\Models\BasicdataValue', 'basicdata_id');
     }
     public function parent()
     {
-        return $this->belongsTo('App\Models\Basicdata\Basicdata', 'parent_id','id');
+        return $this->belongsTo('ArtinCMS\LBDM\Models\Basicdata', 'parent_id','id');
     }
 
     public function children()
     {
-        return $this->hasMany('App\Models\Basicdata\Basicdata', 'parent_id','id')->with('items');
+        return $this->hasMany('ArtinCMS\LBDM\Models\Basicdata', 'parent_id','id')->with('items');
     }
 
     function attrs()
     {
-        return $this->hasMany('App\Models\Basicdata\BasicdataAttributes', 'basicdata_id', 'id');
+        return $this->hasMany('ArtinCMS\LBDM\Models\BasicdataAttributes', 'basicdata_id', 'id');
     }
 
     public function created_by()

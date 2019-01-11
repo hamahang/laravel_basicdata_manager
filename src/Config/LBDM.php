@@ -14,5 +14,4 @@ return [
     // ======================================================================
 
     'lbdm_get_user_model_name' => env('LBDM_GET_USER_MODEL_NAME', 'App\User'),
-
 ];
