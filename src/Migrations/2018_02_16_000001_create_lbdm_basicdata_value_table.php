@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateBasicdataValueTable extends Migration
+class CreateLbdmBasicdataValueTable extends Migration
 {
 
     private $table = 'lbdm_basicdata_values';
