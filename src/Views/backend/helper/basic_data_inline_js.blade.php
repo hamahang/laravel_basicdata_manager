@@ -251,8 +251,8 @@
             }
         }
     ];
-    var getBasicDataRoute = '{{ route('LBDM.get_basic_data') }}';
-    var getBasicDataValueRoute = '{{ route('LBDM.get_basic_data_value') }}';
+    var getBasicdataRoute = '{{ route('LBDM.get_basic_data') }}';
+    var getBasicdataValueRoute = '{{ route('LBDM.get_basic_data_value') }}';
 
     var constraints = {
         title: {
@@ -504,9 +504,9 @@
     }
 
     $(document).ready(function () {
-        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicDataRoute, basic_data_grid_columns);
+        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicdataRoute, basic_data_grid_columns);
         basicDataGridData.columns([3]).visible(false);
-        init_select2_data('#parent_id', {!! LBDM_Get_BasicData_json() !!}, false, true, false, false, 'بدون والد...');
+        init_select2_data('#parent_id', {!! LBDM_Get_Basicdata_json() !!}, false, true, false, false, 'بدون والد...');
 
         $(document).on('click', '.btn_grid_edit_item', function () {
             var item_id = $(this).data('item_id');
@@ -567,8 +567,8 @@
             $('.manage_basic_data_value_title').html('<span>مدیریت آیتم های :</span><span> '+item_title+' </span>');
             $('a[href="#manage_basic_data_value_tab"]').click();
 
-            dataTablesGrid('#basicDataValueGridData', 'basicDataValueGridData', getBasicDataValueRoute, basic_data_value_grid_columns, {basic_data_id: item_id}, null, true, null, null, 1, 'desc');
-            init_select2_data('#basic_data_value_parent_id', {!! LBDM_Get_BasicData_json() !!}, false, false, false, false, 'داده اولیه...');
+            dataTablesGrid('#basicDataValueGridData', 'basicDataValueGridData', getBasicdataValueRoute, basic_data_value_grid_columns, {basic_data_id: item_id}, null, true, null, null, 1, 'desc');
+            init_select2_data('#basic_data_value_parent_id', {!! LBDM_Get_Basicdata_json() !!}, false, false, false, false, 'داده اولیه...');
             $('#basic_data_value_parent_id').val(base_item).trigger('change');
         });
 
@@ -642,7 +642,7 @@
             '   <table id="basicDataGridData" class="table" width="100%"></table>' +
             '</div>';
         $('#basic_data_grid_data_div_parent').html(basic_data_grid_data_div);
-        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicDataRoute, basic_data_grid_columns,
+        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicdataRoute, basic_data_grid_columns,
             {item_id: $(this).val()});
         basicDataGridData.columns([3]).visible(false);
         if ($(this).val() > 0) {

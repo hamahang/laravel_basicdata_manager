@@ -43,6 +43,6 @@
 </div>
 
 <script>
-    init_select2_data('#edit_parent_id', {!! LBDM_Get_BasicData_json() !!}, false, true, false, false, 'بدون والد...');
+    init_select2_data('#edit_parent_id', {!! LBDM_Get_Basicdata_json() !!}, false, true, false, false, 'بدون والد...');
     $('#edit_parent_id').val({{ $basic_data->parent_id }}).trigger('change');
 </script>

@@ -5,27 +5,27 @@ namespace ArtinCMS\LBDM\Controllers;
 use Validator;
 use DataTables;
 use Illuminate\Http\Request;
-use ArtinCMS\LBDM\Models\BasicData;
+use ArtinCMS\LBDM\Models\Basicdata;
 use App\Http\Controllers\Controller;
-use ArtinCMS\LBDM\Models\BasicDataValue;
-use ArtinCMS\LBDM\Requests\EditBasicData_Request;
-use ArtinCMS\LBDM\Requests\DeleteBasicData_Request;
-use ArtinCMS\LBDM\Requests\CreateBasicData_Request;
+use ArtinCMS\LBDM\Models\BasicdataValue;
+use ArtinCMS\LBDM\Requests\EditBasicdata_Request;
+use ArtinCMS\LBDM\Requests\DeleteBasicdata_Request;
+use ArtinCMS\LBDM\Requests\CreateBasicdata_Request;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use ArtinCMS\LBDM\Requests\GetBasicDataValues_Request;
-use ArtinCMS\LBDM\Requests\EditBasicDataValue_Request;
-use ArtinCMS\LBDM\Requests\CreateBasicDataValue_Request;
-use ArtinCMS\LBDM\Requests\DeleteBasicDataValue_Request;
-use ArtinCMS\LBDM\Requests\LoadBasicDataEditForm_Request;
-use ArtinCMS\LBDM\Requests\LoadBasicDataValueEditForm_Request;
+use ArtinCMS\LBDM\Requests\GetBasicdataValues_Request;
+use ArtinCMS\LBDM\Requests\EditBasicdataValue_Request;
+use ArtinCMS\LBDM\Requests\CreateBasicdataValue_Request;
+use ArtinCMS\LBDM\Requests\DeleteBasicdataValue_Request;
+use ArtinCMS\LBDM\Requests\LoadBasicdataEditForm_Request;
+use ArtinCMS\LBDM\Requests\LoadBasicdataValueEditForm_Request;
 
 class LBDMController extends Controller
 {
-    private function reOrderBasicDataValueItem($basicdata_id)
+    private function reOrderBasicdataValueItem($basicdata_id)
     {
-        $all_BasicDataValueItems = BasicdataValue::where('basicdata_id', $basicdata_id)->orderBy('order', 'asc')->get();
+        $all_BasicdataValueItems = BasicdataValue::where('basicdata_id', $basicdata_id)->orderBy('order', 'asc')->get();
         $i = 1;
-        foreach ($all_BasicDataValueItems as $item)
+        foreach ($all_BasicdataValueItems as $item)
         {
             $item->order = $i++;
             $item->save();
@@ -33,11 +33,11 @@ class LBDMController extends Controller
         return $i;
     }
 
-    private function reOrderBasicDataItem($parent_id)
+    private function reOrderBasicdataItem($parent_id)
     {
-        $all_BasicDataItems = Basicdata::where('parent_id', $parent_id)->orderBy('order', 'asc')->get();
+        $all_BasicdataItems = Basicdata::where('parent_id', $parent_id)->orderBy('order', 'asc')->get();
         $i = 1;
-        foreach ($all_BasicDataItems as $item)
+        foreach ($all_BasicdataItems as $item)
         {
             $item->order = $i++;
             $item->save();
@@ -51,7 +51,7 @@ class LBDMController extends Controller
         return view('laravel_basicdata_manager::backend.basic_data_index', compact('basicData'));
     }
 
-    public function getBasicData(Request $request)
+    public function getBasicdata(Request $request)
     {
         if ($request->item_id)
         {
@@ -80,7 +80,7 @@ class LBDMController extends Controller
             ->make(true);
     }
 
-    public function getBasicDataValue(GetBasicDataValues_Request $request)
+    public function getBasicdataValue(GetBasicdataValues_Request $request)
     {
         $basic_data = BasicdataValue::where('basicdata_id', LBDM_DeCodeId($request->basic_data_id));
         return Datatables::eloquent($basic_data)
@@ -97,7 +97,7 @@ class LBDMController extends Controller
 
     }
 
-    public function createBasicData(CreateBasicData_Request $request)
+    public function createBasicdata(CreateBasicdata_Request $request)
     {
         $basic_data = new Basicdata();
         $basic_data->parent_id = $request->parent_id ? $request->parent_id : 0;
@@ -122,7 +122,7 @@ class LBDMController extends Controller
         );
     }
 
-    public function createBasicDataValue(CreateBasicDataValue_Request $request)
+    public function createBasicdataValue(CreateBasicdataValue_Request $request)
     {
         $basic_data_value = new BasicdataValue();
         $basicdata_id = LBDM_DeCodeId($request->basicdata_id_hidden) ;
@@ -147,7 +147,7 @@ class LBDMController extends Controller
         );
     }
 
-    public function editBasicData(EditBasicData_Request $request)
+    public function editBasicdata(EditBasicdata_Request $request)
     {
         $basic_data = Basicdata::find(LBDM_DeCodeId($request->item_id));
         $basic_data->parent_id = $request->parent_id ? $request->parent_id : 0;
@@ -171,7 +171,7 @@ class LBDMController extends Controller
         );
     }
 
-    public function deleteBasicData(DeleteBasicData_Request $request)
+    public function deleteBasicdata(DeleteBasicdata_Request $request)
     {
         $basic_data = Basicdata::find(LBDM_DeCodeId($request->basic_data_id));
         $basic_data->delete();
@@ -191,7 +191,7 @@ class LBDMController extends Controller
         );
     }
 
-    public function deleteBasicDataValue(DeleteBasicDataValue_Request $request)
+    public function deleteBasicdataValue(DeleteBasicdataValue_Request $request)
     {
         $basic_data_value = BasicdataValue::find(LBDM_DeCodeId($request->basic_data_value_id));
         $basic_data_value->delete();
@@ -211,7 +211,7 @@ class LBDMController extends Controller
         );
     }
 
-    public function editBasicDataValue(EditBasicDataValue_Request $request)
+    public function editBasicdataValue(EditBasicdataValue_Request $request)
     {
         $basic_data = BasicdataValue::find(LBDM_DeCodeId($request->item_id));
         $basic_data->basicdata_id = $request->basicdata_id;
@@ -236,7 +236,7 @@ class LBDMController extends Controller
         );
     }
 
-    public function getBasicDataEditForm(LoadBasicDataEditForm_Request $request)
+    public function getBasicdataEditForm(LoadBasicdataEditForm_Request $request)
     {
         $basic_data = Basicdata::find(LBDM_DeCodeId($request->basic_data_id));
         $basic_data_edit_view = view('laravel_basicdata_manager::backend.views.basic_data_edit_form')
@@ -257,7 +257,7 @@ class LBDMController extends Controller
         );
     }
 
-    public function getBasicDataValueEditForm(LoadBasicDataValueEditForm_Request $request)
+    public function getBasicdataValueEditForm(LoadBasicdataValueEditForm_Request $request)
     {
         $basic_data_value = BasicdataValue::find(LBDM_DeCodeId($request->basic_data_value_id));
         $basic_data_value_edit_view = view('laravel_basicdata_manager::backend.views.basic_data_value_edit_form')
@@ -278,11 +278,11 @@ class LBDMController extends Controller
         );
     }
 
-    public function saveOrderBasicDataValueItem(Request $request)
+    public function saveOrderBasicdataValueItem(Request $request)
     {
         $item_id = LBDM_DeCodeId($request->item_id);
         $basicdata_id = $request->basicdata_id;
-        $count = $this->reOrderBasicDataValueItem($basicdata_id);
+        $count = $this->reOrderBasicdataValueItem($basicdata_id);
         $BasicdataValue = BasicdataValue::find($item_id);
         $order = $BasicdataValue->order;
         if ($request->order_type == 'increase')
@@ -320,11 +320,11 @@ class LBDMController extends Controller
         return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
     }
 
-    public function saveOrderBasicDataItem(Request $request)
+    public function saveOrderBasicdataItem(Request $request)
     {
         $item_id = LBDM_DeCodeId($request->item_id);
         $parent_id = $request->parent_id;
-        $count = $this->reOrderBasicDataItem($parent_id);
+        $count = $this->reOrderBasicdataItem($parent_id);
         $Basicdata = Basicdata::find($item_id);
         $order = $Basicdata->order;
         if ($request->order_type == 'increase')
