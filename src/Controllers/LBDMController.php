@@ -126,19 +126,32 @@ class LBDMController extends Controller
     {
         $basic_data_value = new BasicdataValue();
         $basicdata_id = LBDM_DeCodeId($request->basicdata_id_hidden) ;
-        $basic_data_value->basicdata_id = $basicdata_id;
-        $basic_data_value->title = $request->title;
-        $basic_data_value->value = $request->value;
-        $basic_data_value->comment = $request->comment;
-        $basic_data_value->created_by = auth()->id();
-        $basic_data_value->save();
-
-        $res =
-            [
-                'success' => true,
-                'status_type' => "success",
-                'message' => 'مقدار داده اولیه با موفقیت افزوده شد.'
-            ];
+        $basicdata = Basicdata::find($basicdata_id);
+        if ($basicdata && $basicdata->undeletable == 0)
+        {
+            $basic_data_value->basicdata_id = $basicdata_id;
+            $basic_data_value->title = $request->title;
+            $basic_data_value->value = $request->value;
+            $basic_data_value->comment = $request->comment;
+            $basic_data_value->created_by = auth()->id();
+            $basic_data_value->save();
+            $res =
+                [
+                    'success' => true,
+                    'status_type' => "success",
+                    'message' => 'مقدار داده اولیه با موفقیت افزوده شد.'
+                ];
+        }
+        else
+        {
+            $res =
+                [
+                    'success' => false,
+                    'message' => [['title' => 'لطفا موارد زیر را بررسی نمایید:', 'items' => [
+                        'error' => 'عملیات امکان پذیر نمیباشد .'
+                    ]]]
+                ];
+        }
 
         throw new HttpResponseException(
             response()
@@ -174,16 +187,27 @@ class LBDMController extends Controller
     public function deleteBasicdata(DeleteBasicdata_Request $request)
     {
         $basic_data = Basicdata::find(LBDM_DeCodeId($request->basic_data_id));
-        $basic_data->delete();
+        if ($basic_data && $basic_data->undeletable == 0)
+        {
+            $basic_data->delete();
+            $res =
+                [
+                    'success' => true,
+                    'status_type' => "success",
+                    'message' => 'داده اولیه با موفقیت حذف گردید.'
+                ];
 
-        $res =
-            [
-                'success' => true,
-                'status_type' => "success",
-                'message' => 'داده اولیه با موفقیت حذف گردید.'
-            ];
-
-
+        }
+        else
+        {
+            $res =
+                [
+                    'success' => false,
+                    'message' => [['title' => 'لطفا موارد زیر را بررسی نمایید:', 'items' => [
+                        'error' => 'عملیات امکان پذیر نمیباشد .'
+                    ]]]
+                ];
+        }
         throw new HttpResponseException(
             response()
                 ->json($res, 200)
@@ -194,15 +218,27 @@ class LBDMController extends Controller
     public function deleteBasicdataValue(DeleteBasicdataValue_Request $request)
     {
         $basic_data_value = BasicdataValue::find(LBDM_DeCodeId($request->basic_data_value_id));
-        $basic_data_value->delete();
+        if ($basic_data_value && $basic_data_value->undeletable == 0)
+        {
+            $basic_data_value->delete();
+            $res =
+                [
+                    'success' => true,
+                    'status_type' => "success",
+                    'message' => 'مقدار داده اولیه با موفقیت حذف گردید.'
+                ];
 
-        $res =
-            [
-                'success' => true,
-                'status_type' => "success",
-                'message' => 'مقدار داده اولیه با موفقیت حذف گردید.'
-            ];
-
+        }
+        else
+        {
+            $res =
+                [
+                    'success' => false,
+                    'message' => [['title' => 'لطفا موارد زیر را بررسی نمایید:', 'items' => [
+                        'error' => 'عملیات امکان پذیر نمیباشد .'
+                    ]]]
+                ];
+        }
 
         throw new HttpResponseException(
             response()

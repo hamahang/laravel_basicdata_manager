@@ -23,6 +23,8 @@ class CreateLbdmBasicdataTable extends Migration
             $table->string('dev_title',255)->nullable()->default(null);
             $table->string('comment',255)->nullable()->default(null);
             $table->string('dev_comment',255)->nullable()->default(null);
+            $table->enum('undeletable', array('0','1'))->nullable()->default('0');
+            $table->enum('fixed', array('0','1'))->nullable()->default('0');
             $table->integer('order')->nullable()->default(null);
             $table->string('extra_field',255)->nullable()->default(null);
             $table->integer('created_by')->nullable()->default(null)->unsigned();
