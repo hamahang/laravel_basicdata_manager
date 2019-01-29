@@ -250,7 +250,7 @@ class LBDMController extends Controller
     public function editBasicdataValue(EditBasicdataValue_Request $request)
     {
         $basic_data = BasicdataValue::find(LBDM_DeCodeId($request->item_id));
-        $basic_data->basicdata_id = $request->basicdata_id;
+//        $basic_data->basicdata_id = $request->basicdata_id;
         $basic_data->title = $request->title;
         $basic_data->value = $request->value;
         $basic_data->comment = $request->comment;
