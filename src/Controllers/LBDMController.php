@@ -127,7 +127,7 @@ class LBDMController extends Controller
         $basic_data_value = new BasicdataValue();
         $basicdata_id = LBDM_DeCodeId($request->basicdata_id_hidden) ;
         $basicdata = Basicdata::find($basicdata_id);
-        if ($basicdata && $basicdata->undeletable == 0)
+        if ($basicdata && $basicdata->fixed == 0)
         {
             $basic_data_value->basicdata_id = $basicdata_id;
             $basic_data_value->title = $request->title;
