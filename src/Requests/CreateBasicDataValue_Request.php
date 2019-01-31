@@ -27,7 +27,7 @@ class CreateBasicdataValue_Request extends FormRequest
     {
         $roles = [
 //            'basicdata_id' => 'required',
-            'title' => 'required|min:2|max:60',
+            'title' => 'required|min:2|max:250',
 //            'value' => 'required'
         ];
         return $roles;
