@@ -99,8 +99,11 @@ class LBDMController extends Controller
 
     public function createBasicdata(CreateBasicdata_Request $request)
     {
+        $parent_id = $request->parent_id ? $request->parent_id : 0 ;
+        $dev_title = md5($parent_id.'_'.date('Y-m-d:H-i-s'));
         $basic_data = new Basicdata();
-        $basic_data->parent_id = $request->parent_id ? $request->parent_id : 0;
+        $basic_data->parent_id = $dev_title;
+        $basic_data->dev_title = $dev_title;
         $basic_data->title = $request->title;
         $basic_data->comment = $request->comment;
         $basic_data->created_by = auth()->id();
@@ -129,8 +132,10 @@ class LBDMController extends Controller
         $basicdata = Basicdata::find($basicdata_id);
         if ($basicdata && $basicdata->fixed == 0)
         {
+            $dev_title = md5($basicdata_id.'_'.date('Y-m-d:H-i-s'));
             $basic_data_value->basicdata_id = $basicdata_id;
             $basic_data_value->title = $request->title;
+            $basic_data_value->dev_title = $dev_title;
             $basic_data_value->value = $request->value;
             $basic_data_value->comment = $request->comment;
             $basic_data_value->created_by = auth()->id();
@@ -397,7 +402,4 @@ class LBDMController extends Controller
         $result['success'] = true;
         return response()->json($result, 200)->withHeaders(['Content-Type' => 'json', 'charset' => 'utf-8']);
     }
-
-
-
 }
