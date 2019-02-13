@@ -33,8 +33,8 @@ class CreateLbdmBasicdataTable extends Migration
             $table->softDeletes();
         });
 
+        DB::statement("ALTER TABLE lbdm_basicdata ADD unique_md5_dev_title CHAR (32) AS (MD5(CONCAT_WS('X',dev_title,deleted_at))) PERSISTENT UNIQUE");
         //\DB::unprepared(file_get_contents(__DIR__.'/sql/customer_tokens.sql') );
-
     }
 
     /**
