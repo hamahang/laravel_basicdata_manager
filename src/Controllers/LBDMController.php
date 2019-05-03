@@ -102,7 +102,7 @@ class LBDMController extends Controller
         $parent_id = $request->parent_id ? $request->parent_id : 0 ;
         $dev_title = md5($parent_id.'_'.date('Y-m-d:H-i-s'));
         $basic_data = new Basicdata();
-        $basic_data->parent_id = $dev_title;
+        $basic_data->parent_id = $parent_id;
         $basic_data->dev_title = $dev_title;
         $basic_data->title = $request->title;
         $basic_data->comment = $request->comment;
