@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CreateBasicDataValue_Request extends FormRequest
+class CreateBasicdataValue_Request extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class CreateBasicDataValue_Request extends FormRequest
     {
         $roles = [
 //            'basicdata_id' => 'required',
-            'title' => 'required|min:2|max:60',
+            'title' => 'required|min:2|max:250',
 //            'value' => 'required'
         ];
         return $roles;

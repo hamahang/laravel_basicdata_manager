@@ -3,10 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateBasicdataAttributesTable extends Migration
+class CreateLbdmBasicdataAttributesValuesTable extends Migration
 {
 
-    const table = 'lbdm_basicdata_attributes';
+    const table = 'lbdm_basicdata_attributes_values';
 
     /**
      * Run the migrations.
@@ -18,11 +18,9 @@ class CreateBasicdataAttributesTable extends Migration
         Schema::create(self::table, function(Blueprint $table)
         {
             $table->increments('id')->unsigned();
-            $table->integer('basicdata_id')->default(0);
-            $table->string('title', 255)->nullable()->default(null);
-            $table->string('target_table', 255)->nullable()->default(null);
-            $table->integer('target_id')->default(0);
-            $table->text('description')->nullable()->default(null);
+            $table->integer('basicdata_value_id')->unsighned()->default(0);
+            $table->integer('basicdata_attribute_id')->unsighned()->default(0);
+            $table->text('value')->nullable()->default(null);
             $table->enum('is_active', ['0','1'])->default('1');
             $table->integer('created_by')->nullable()->default(null)->unsigned();
             $table->timestamps();

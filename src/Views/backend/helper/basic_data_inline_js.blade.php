@@ -19,7 +19,7 @@
             width: '30%',
             data: 'title', name: 'title', 'title': 'عنوان',
             mRender: function (data, type, full) {
-                return '<a href="#"><span class="manage_basic_data_value" data-item_id="' + full.id + '" data-item_title="' + full.title + '" data-base_item="' + full.base_item + '">' + full.title + '</span></a>';
+                return '<a href="#"><span class="manage_basic_data_value" data-item_id="' + full.id + '" data-item_title="' + full.title + '" data-base_item="' + full.base_item + '" data-fixed="' + full.fixed + '">' + full.title + '</span></a>';
             }
         },
         {
@@ -105,22 +105,26 @@
             data: 'action', name: 'action', 'title': 'عملیات',
             mRender: function (data, type, full) {
                 var result = '';
-                result += '' +
-                    '<td class="text-center">' +
-                    '   <ul class="icons-list">' +
-                    '       <li class="dropdown" onclick="set_fixed_dropdown_menu(this)">' +
-                    '           <a href="#" class="dropdown-toggle" data-toggle="dropdown">' +
-                    '               <i class="icon-menu9"></i>' +
-                    '           </a>' +
-                    '           <ul class="dropdown-menu dropdown-menu-right">' +
-                    '               <li><a class="manage_basic_data_value" data-item_id="' + full.id + '" data-item_title="' + full.title + '" data-base_item="' + full.base_item + '"><i class="fa fa-eye"></i>مشاهده مقادیر</a></li>' +
-                    '               <li><a class="btn_grid_edit_item" data-title="' + full.title + '" data-item_id="' + full.id + '"><i class="fa fa-edit"></i>ویرایش</a></li>' +
-                    '               <li><a class="btn_grid_delete_item" data-item_id="' + full.id + '"><i class="fa fa-times"></i>حذف</a></li>' +
-                    '           </ul>' +
-                    '       </li>' +
-                    '   </ul>' +
-                    '</td>';
-                return result;
+                    result +=   '' +
+                                '<td class="text-center">' +
+                                '   <ul class="icons-list">' +
+                                '       <li class="dropdown" onclick="set_fixed_dropdown_menu(this)">' +
+                                '           <a href="#" class="dropdown-toggle" data-toggle="dropdown">' +
+                                '               <i class="icon-menu9"></i>' +
+                                '           </a>' +
+                                '           <ul class="dropdown-menu dropdown-menu-right">' +
+                                '               <li><a class="manage_basic_data_value" data-item_id="' + full.id + '" data-item_title="' + full.title + '" data-base_item="' + full.base_item + '" data-fixed="' + full.fixed + '"><i class="fa fa-eye"></i>مشاهده مقادیر</a></li>' +
+                                '               <li><a class="btn_grid_edit_item" data-title="' + full.title + '" data-item_id="' + full.id + '"><i class="fa fa-edit"></i>ویرایش</a></li>' ;
+                    if(full.undeletable == 0)
+                    {
+                        result +=   '           <li><a class="btn_grid_delete_item" data-item_id="' + full.id + '"><i class="fa fa-times"></i>حذف</a></li>' ;
+                    }
+                    result +=
+                                '           </ul>' +
+                                '       </li>' +
+                                '   </ul>' +
+                                '</td>';
+                    return result;
             }
         }
     ];
@@ -233,26 +237,30 @@
             data: 'action', name: 'action', 'title': 'عملیات',
             mRender: function (data, type, full) {
                 var result = '';
-                result += '' +
-                    '<td class="text-center">' +
-                    '   <ul class="icons-list">' +
-                    '       <li class="dropdown" onclick="set_fixed_dropdown_menu(this)">' +
-                    '           <a href="#" class="dropdown-toggle" data-toggle="dropdown">' +
-                    '               <i class="icon-menu9"></i>' +
-                    '           </a>' +
-                    '           <ul class="dropdown-menu dropdown-menu-right">' +
-                    '               <li><a class="btn_grid_edit_value_item" data-item_id="' + full.id + '" data-title="' + full.title +'"><i class="fa fa-edit"></i>ویرایش</a></li>' +
-                    '               <li><a class="btn_grid_delete_value_item" data-item_id="' + full.id + '"><i class="fa fa-times"></i>حذف</a></li>' +
-                    '           </ul>' +
-                    '       </li>' +
-                    '   </ul>' +
-                    '</td>';
+                result +=   '' +
+                            '<td class="text-center">' +
+                            '   <ul class="icons-list">' +
+                            '       <li class="dropdown" onclick="set_fixed_dropdown_menu(this)">' +
+                            '           <a href="#" class="dropdown-toggle" data-toggle="dropdown">' +
+                            '               <i class="icon-menu9"></i>' +
+                            '           </a>' +
+                            '           <ul class="dropdown-menu dropdown-menu-right">' +
+                            '               <li><a class="btn_grid_edit_value_item" data-item_id="' + full.id + '" data-title="' + full.title +'"><i class="fa fa-edit"></i>ویرایش</a></li>' ;
+                if (full.undeletable == 0)
+                {
+                    result +=   '               <li><a class="btn_grid_delete_value_item" data-item_id="' + full.id + '"><i class="fa fa-times"></i>حذف</a></li>';
+                }
+                result +=   ''+
+                            '           </ul>' +
+                            '       </li>' +
+                            '   </ul>' +
+                            '</td>';
                 return result;
             }
         }
     ];
-    var getBasicDataRoute = '{{ route('LBDM.get_basic_data') }}';
-    var getBasicDataValueRoute = '{{ route('LBDM.get_basic_data_value') }}';
+    var getBasicdataRoute = '{{ route('LBDM.get_basic_data') }}';
+    var getBasicdataValueRoute = '{{ route('LBDM.get_basic_data_value') }}';
 
     var constraints = {
         title: {
@@ -412,11 +420,10 @@
                 if (data.success) {
                     menotify('success', 'حذف داده اولیه', data.message);
                     basicDataGridData.ajax.reload(null,false);
-//                    showMessages(data.message, 'form_message_box', 'error');
-//                    showErrors(formElement, data.errors);
                 }
                 else {
-//                    showMessages(data.message, 'form_message_box', 'success');
+                    showMessages(data.message, 'form_message_box', 'error');
+                    showErrors(formElement, data.errors);
 
                 }
             }
@@ -437,11 +444,10 @@
                 if (data.success) {
                     menotify('success', 'حذف مقدار داده اولیه', data.message);
                     basicDataValueGridData.ajax.reload(null,false);
-//                    showMessages(data.message, 'form_message_box', 'error');
-//                    showErrors(formElement, data.errors);
                 }
                 else {
-//                    showMessages(data.message, 'form_message_box', 'success');
+                    showMessages(data.message, 'form_message_box', 'error');
+                    showErrors(formElement, data.errors);
 
                 }
             }
@@ -504,9 +510,9 @@
     }
 
     $(document).ready(function () {
-        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicDataRoute, basic_data_grid_columns);
+        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicdataRoute, basic_data_grid_columns);
         basicDataGridData.columns([3]).visible(false);
-        init_select2_data('#parent_id', {!! LBDM_Get_BasicData_json() !!}, false, true, false, false, 'بدون والد...');
+        init_select2_data('#parent_id', {!! LBDM_Get_Basicdata_json() !!}, false, true, false, false, 'بدون والد...');
 
         $(document).on('click', '.btn_grid_edit_item', function () {
             var item_id = $(this).data('item_id');
@@ -555,6 +561,15 @@
         $(document).off('click', '.manage_basic_data_value');
         $(document).on('click', '.manage_basic_data_value', function () {
             var item_id = $(this).data('item_id');
+            var fixed = $(this).data('fixed');
+            if(fixed == 1)
+            {
+                $('#li_add_basic_data_value_tab').hide() ;
+            }
+            else
+            {
+                $('#li_add_basic_data_value_tab').show() ;
+            }
             $('#basicdata_id_hidden').val(item_id) ;
             var item_title = $(this).data('item_title');
             var base_item = $(this).data('base_item');
@@ -567,8 +582,8 @@
             $('.manage_basic_data_value_title').html('<span>مدیریت آیتم های :</span><span> '+item_title+' </span>');
             $('a[href="#manage_basic_data_value_tab"]').click();
 
-            dataTablesGrid('#basicDataValueGridData', 'basicDataValueGridData', getBasicDataValueRoute, basic_data_value_grid_columns, {basic_data_id: item_id}, null, true, null, null, 1, 'desc');
-            init_select2_data('#basic_data_value_parent_id', {!! LBDM_Get_BasicData_json() !!}, false, false, false, false, 'داده اولیه...');
+            dataTablesGrid('#basicDataValueGridData', 'basicDataValueGridData', getBasicdataValueRoute, basic_data_value_grid_columns, {basic_data_id: item_id}, null, true, null, null, 1, 'desc');
+            init_select2_data('#basic_data_value_parent_id', {!! LBDM_Get_Basicdata_json() !!}, false, false, false, false, 'داده اولیه...');
             $('#basic_data_value_parent_id').val(base_item).trigger('change');
         });
 
@@ -642,7 +657,7 @@
             '   <table id="basicDataGridData" class="table" width="100%"></table>' +
             '</div>';
         $('#basic_data_grid_data_div_parent').html(basic_data_grid_data_div);
-        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicDataRoute, basic_data_grid_columns,
+        dataTablesGrid('#basicDataGridData', 'basicDataGridData', getBasicdataRoute, basic_data_grid_columns,
             {item_id: $(this).val()});
         basicDataGridData.columns([3]).visible(false);
         if ($(this).val() > 0) {

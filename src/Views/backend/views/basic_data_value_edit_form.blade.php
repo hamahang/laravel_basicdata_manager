@@ -58,6 +58,6 @@
 </div>
 
 <script>
-    init_select2_data('#basic_data_value_edit_parent_id', {!! LBDM_Get_BasicData_json() !!}, false, false, false, false, 'داده اولیه...');
+    init_select2_data('#basic_data_value_edit_parent_id', {!! LBDM_Get_Basicdata_json() !!}, false, false, false, false, 'داده اولیه...');
     $('#basic_data_value_edit_parent_id').val({{ $basic_data_value->basicdata_id }}).trigger('change');
 </script>

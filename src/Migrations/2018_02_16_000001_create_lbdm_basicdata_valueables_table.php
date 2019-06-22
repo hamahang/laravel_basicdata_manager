@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateBasicdataValueablesTable extends Migration
+class CreateLbdmBasicdataValueablesTable extends Migration
 {
 
     const table = 'lbdm_basicdata_valueables';

@@ -101,7 +101,7 @@
                                     <div class="tabbable">
                                         <ul class="nav nav-tabs nav-tabs-bottom">
                                             <li class="active"><a href="#basic_data_value_list_div" data-toggle="tab">مدیریت</a></li>
-                                            <li><a href="#add_basic_data_value_tab" data-toggle="tab">افزودن</a></li>
+                                            <li id="li_add_basic_data_value_tab"><a href="#add_basic_data_value_tab" data-toggle="tab">افزودن</a></li>
                                             <li class="hide" id="tab_edit_basic_data_value">
                                                 <button class="close closeTab cancel_edit_basic_data_value" type="button">×</button>
                                                 <span class="divider">|</span>

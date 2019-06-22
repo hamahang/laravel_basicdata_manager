@@ -38,7 +38,7 @@ class LBDMServiceProvider extends ServiceProvider
             if($value==0 || !$value) return true;
             else
             {
-             $basic_data=\ArtinCMS\LBDM\Models\BasicData::find($value);
+             $basic_data=\ArtinCMS\LBDM\Models\Basicdata::find($value);
              if($basic_data) return true;
              else return false;
             }
