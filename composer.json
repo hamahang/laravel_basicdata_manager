@@ -19,7 +19,7 @@
     },
     "require": {
         "artincms/laravel_file_manager": "dev-master",
-        "yajra/laravel-datatables-oracle": "~8.0",
+        "yajra/laravel-datatables-oracle": "~9.0",
         "hashids/hashids": "^3.0"
     },
     "extra": {
