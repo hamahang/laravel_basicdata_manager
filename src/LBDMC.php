@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtinCMS\LBDM;
+namespace Hamahang\LBDM;
 
 class LBDMC
 {

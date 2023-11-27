@@ -1,5 +1,5 @@
 <?php
-Route::group(['prefix' => config('laravel_basicdata_manager.private_route_prefix'), 'namespace' => 'ArtinCMS\LBDM\Controllers', 'middleware' => config('laravel_basicdata_manager.private_middlewares')], function () {
+Route::group(['prefix' => config('laravel_basicdata_manager.private_route_prefix'), 'namespace' => 'Hamahang\LBDM\Controllers', 'middleware' => config('laravel_basicdata_manager.private_middlewares')], function () {
     Route::get('/', ['as' => 'LBDM.index', 'uses' => 'LBDMController@index']);
     Route::post('get_basic_data', ['as' => 'LBDM.get_basic_data', 'uses' => 'LBDMController@getBasicdata']);
     Route::post('get_basic_data_value', ['as' => 'LBDM.get_basic_data_value', 'uses' => 'LBDMController@getBasicdataValue']);

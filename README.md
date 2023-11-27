@@ -13,7 +13,7 @@ Laravel 5.5|5.6
 
 # Installation
 <h3>Quick installation</h3> 
-<div class="highlight highlight-source-shell"><pre>composer require artincms/laravel_basicdata_manager</pre></div>
+<div class="highlight highlight-source-shell"><pre>composer require hamahang/laravel_basicdata_manager</pre></div>
 <h6>vendor publish</h6>
  <div class="highlight highlight-text-html-php"><pre>
 php artisan vendor:publish--force

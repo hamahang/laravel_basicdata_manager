@@ -58,7 +58,7 @@ if (!function_exists('LBDM_Get_Basicdata_json'))
 {
     function LBDM_Get_Basicdata_json()
     {
-        $items = ArtinCMS\LBDM\Models\Basicdata::select('id', 'title as text')
+        $items = Hamahang\LBDM\Models\Basicdata::select('id', 'title as text')
             ->get()->toJson();
 
         return $items;
@@ -73,7 +73,7 @@ if (!function_exists('LBDM_Date_GtoJ'))
         {
             return '--/--/----';
         }
-        $date = new ArtinCMS\LBDM\Helpers\Classes\jDateTime($convert, true, 'Asia/Tehran');
+        $date = new Hamahang\LBDM\Helpers\Classes\jDateTime($convert, true, 'Asia/Tehran');
         $time = is_numeric($GDate) ? strtotime(date('Y-m-d H:i:s', $GDate)) : strtotime($GDate);
 
         return $date->date($Format, $time);
@@ -87,8 +87,8 @@ if (!function_exists('LBDM_Date_JtoG'))
     function LBDM_Date_JtoG($jDate, $delimiter = '/', $to_string = false, $with_time = false, $input_format = 'Y/m/d H:i:s')
     {
         $jDate = ConvertNumbersFatoEn($jDate);
-        $parseDateTime = ArtinCMS\LBDM\Helpers\Classes\jDateTime::parseFromFormat($input_format, $jDate);
-        $r = ArtinCMS\LBDM\Helpers\Classes\jDateTime::toGregorian($parseDateTime['year'], $parseDateTime['month'], $parseDateTime['day']);
+        $parseDateTime = Hamahang\LBDM\Helpers\Classes\jDateTime::parseFromFormat($input_format, $jDate);
+        $r = Hamahang\LBDM\Helpers\Classes\jDateTime::toGregorian($parseDateTime['year'], $parseDateTime['month'], $parseDateTime['day']);
         if ($to_string)
         {
             if ($with_time)

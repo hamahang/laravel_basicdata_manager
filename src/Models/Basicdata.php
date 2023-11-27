@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtinCMS\LBDM\Models;
+namespace Hamahang\LBDM\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,21 +18,21 @@ class Basicdata extends Model
 
     public function items()
     {
-        return $this->hasMany('ArtinCMS\LBDM\Models\BasicdataValue', 'basicdata_id');
+        return $this->hasMany('Hamahang\LBDM\Models\BasicdataValue', 'basicdata_id');
     }
     public function parent()
     {
-        return $this->belongsTo('ArtinCMS\LBDM\Models\Basicdata', 'parent_id','id');
+        return $this->belongsTo('Hamahang\LBDM\Models\Basicdata', 'parent_id','id');
     }
 
     public function children()
     {
-        return $this->hasMany('ArtinCMS\LBDM\Models\Basicdata', 'parent_id','id')->with('items');
+        return $this->hasMany('Hamahang\LBDM\Models\Basicdata', 'parent_id','id')->with('items');
     }
 
     function attrs()
     {
-        return $this->hasMany('ArtinCMS\LBDM\Models\BasicdataAttributes', 'basicdata_id', 'id');
+        return $this->hasMany('Hamahang\LBDM\Models\BasicdataAttributes', 'basicdata_id', 'id');
     }
 
     public function created_by()

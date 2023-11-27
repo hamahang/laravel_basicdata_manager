@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtinCMS\LBDM\Models;
+namespace Hamahang\LBDM\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,12 +32,12 @@ class BasicdataValue extends Model
     }
     public function attrs()
     {
-        return $this->belongsToMany('ArtinCMS\LBDM\Models\BasicdataAttributes', 'basicdata_attributes_values', 'basicdata_value_id', 'basicdata_attribute_id');//-- ->where('hamahang_basicdata_attributes.basicdata_id', $this->parent_id)--}}
+        return $this->belongsToMany('Hamahang\LBDM\Models\BasicdataAttributes', 'basicdata_attributes_values', 'basicdata_value_id', 'basicdata_attribute_id');//-- ->where('hamahang_basicdata_attributes.basicdata_id', $this->parent_id)--}}
     }
 
     public function basicdata()
     {
-        return $this->belongsTo('ArtinCMS\LBDM\Models\Basicdata', 'basicdata_id');
+        return $this->belongsTo('Hamahang\LBDM\Models\Basicdata', 'basicdata_id');
     }
 
     public function getBasicdatasAttributesAttribute()

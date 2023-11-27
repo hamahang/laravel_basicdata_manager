@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtinCMS\LBDM;
+namespace Hamahang\LBDM;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 
@@ -38,7 +38,7 @@ class LBDMServiceProvider extends ServiceProvider
             if($value==0 || !$value) return true;
             else
             {
-             $basic_data=\ArtinCMS\LBDM\Models\Basicdata::find($value);
+             $basic_data=\Hamahang\LBDM\Models\Basicdata::find($value);
              if($basic_data) return true;
              else return false;
             }

@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtinCMS\LBDM\Requests;
+namespace Hamahang\LBDM\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;

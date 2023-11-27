@@ -1,5 +1,5 @@
 <?php
-namespace ArtinCMS\LBDM;
+namespace Hamahang\LBDM;
 use Illuminate\Support\Facades\Facade;
 
 class LBDMFacade extends Facade

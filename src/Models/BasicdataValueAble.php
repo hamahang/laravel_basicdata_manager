@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtinCMS\LBDM\Models;
+namespace Hamahang\LBDM\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

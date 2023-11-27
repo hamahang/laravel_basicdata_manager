@@ -1,12 +1,20 @@
 {
-    "name": "artincms/laravel_basicdata_manager",
-    "description": "Official ArtinCMS.com Laravel Basicdata Manager Package",
-    "keywords": ["laravel", "ArtinCMS", "مدیریت داده های اولیه", "مدیریت داده ها", "Basicdata manager", "Basic", "artincms.com","آرتین سی ام اس"],
+    "name": "hamahang/laravel_basicdata_manager",
+    "description": "Official Hamahang.com Laravel Basicdata Manager Package",
+    "keywords": ["laravel", "Hamahang", "مدیریت داده های اولیه", "مدیریت داده ها", "Basicdata manager", "Basic", "hamahang.com","آرتین سی ام اس"],
     "license": "MIT",
     "authors": [
         {
             "name": "Adel.Raheli",
             "email": "adel.raheli@gmail.com"
+        },
+        {
+            "name": "Faramarz Sadeghi",
+            "email": "faramarz.sadeghi89@gmail.com"
+        },
+        {
+            "name": "Mostafa Sharafi",
+            "email": "mostafasharafi.dev@gmail.com"
         }
     ],
     "autoload": {
@@ -14,18 +22,18 @@
             "src/Helpers/function/API.php"
         ],
         "psr-4": {
-            "ArtinCMS\\LBDM\\": "src"
+            "Hamahang\\LBDM\\": "src"
         }
     },
     "require": {
-        "artincms/laravel_file_manager": "dev-master",
+        "hamahang/laravel_file_manager": "dev-master",
         "yajra/laravel-datatables-oracle": ">=9.0",
         "hashids/hashids": ">=3.0"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "ArtinCMS\\LBDM\\LBDMServiceProvider"
+                "Hamahang\\LBDM\\LBDMServiceProvider"
             ]
         }
     }
